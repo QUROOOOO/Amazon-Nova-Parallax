@@ -1,0 +1,16 @@
+
+> frontend@0.0.0 lint
+> eslint .
+
+
+D:\hackathons\AWSHackathon\Jan_Sahayak\frontend\src\components\CustomCursor.tsx
+  9:9  warning  The 'updateCursor' function makes the dependencies of useEffect Hook (at line 50) change on every render. To fix this, wrap the definition of 'updateCursor' in its own useCallback() Hook  react-hooks/exhaustive-deps
+
+D:\hackathons\AWSHackathon\Jan_Sahayak\frontend\src\pages\Dashboard.tsx
+   40:3   warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+  108:7   warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-explicit-any')
+  303:32  error    Unexpected any. Specify a different type                                                               @typescript-eslint/no-explicit-any
+
+✖ 4 problems (1 error, 3 warnings)
+  0 errors and 2 warnings potentially fixable with the `--fix` option.
+

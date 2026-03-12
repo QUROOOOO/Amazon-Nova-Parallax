@@ -1,0 +1,435 @@
+/* ============================================
+   NOTHING OS DESIGN SYSTEM
+   Strict 3-Color Palette + Dot-Matrix Aesthetic
+   ============================================ */
+
+/* --- Fonts Import --- */
+@import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Anton&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+:root {
+  /* === NOTHING OS: DARK MODE (Default) === */
+  --n-bg: #000000;
+  --n-surface: #1B1B1D;
+  --n-surface-elevated: #252527;
+  --n-on-surface: #FFFFFF;
+  --n-on-surface-muted: #888888;
+  --n-outline: #333333;
+  --n-accent: #D71921;
+  --n-accent-dim: rgba(215, 25, 33, 0.15);
+  --n-accent-yellow: #FFD600;
+  --n-accent-yellow-dim: rgba(255, 214, 0, 0.15);
+
+  /* Legacy token mapping (for components not yet migrated) */
+  --md-sys-color-background: var(--n-bg);
+  --md-sys-color-on-background: var(--n-on-surface);
+  --md-sys-color-surface: var(--n-surface);
+  --md-sys-color-on-surface: var(--n-on-surface);
+  --md-sys-color-surface-variant: var(--n-surface-elevated);
+  --md-sys-color-on-surface-variant: var(--n-on-surface-muted);
+  --md-sys-color-outline: var(--n-outline);
+  --md-sys-color-primary: var(--n-accent);
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: var(--n-accent-dim);
+  --md-sys-color-secondary: var(--n-accent);
+  --md-sys-color-error: var(--n-accent);
+  --md-sys-color-on-error: #FFFFFF;
+
+  /* Typography */
+  --font-dot: 'Space Mono', monospace;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-display: var(--font-dot);
+  --font-family-heading: var(--font-body);
+  --font-family-body: var(--font-body);
+
+  /* Radii — Nothing OS style */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 9999px;
+
+  /* Spacing */
+  --space-2: 0.125rem;
+  --space-4: 0.25rem;
+  --space-6: 0.375rem;
+  --space-8: 0.5rem;
+  --space-10: 0.625rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-20: 1.25rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-48: 3rem;
+  --space-64: 4rem;
+
+  /* Shadows — Soft, large-radius aesthetic */
+  --shadow-1: none;
+  --shadow-2: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --shadow-3: 0 8px 40px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 8px 32px rgba(215, 25, 33, 0.15);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(27, 27, 29, 0.7);
+  --glass-blur: 20px;
+  --glass-border: rgba(255, 255, 255, 0.06);
+
+  /* Cinematic Easing */
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-cinematic: 0.65s;
+}
+
+/* === LIGHT MODE === */
+[data-theme="light"] {
+  --n-bg: #FFFFFF;
+  --n-surface: #F5F5F5;
+  --n-surface-elevated: #EBEBEB;
+  --n-on-surface: #1B1B1D;
+  --n-on-surface-muted: #666666; /* Darkened from #999999 for better readability */
+  --n-outline: #E0E0E0;
+  --n-accent: #D71921;
+  --n-accent-dim: rgba(215, 25, 33, 0.1);
+  --n-accent-yellow: #FACC15;
+  --n-accent-yellow-dim: rgba(250, 204, 21, 0.1);
+
+  --shadow-2: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-3: 0 8px 40px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 8px 32px rgba(215, 25, 33, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.06);
+}
+
+/* === GLOBAL RESET === */
+::-webkit-scrollbar {
+  display: none;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+body {
+  background-color: var(--n-bg);
+  color: var(--n-on-surface);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Noise Grain Overlay */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 99998;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+body.auth-active {
+  overflow: hidden;
+}
+
+/* === NOTHING OS TYPOGRAPHY === */
+h1, h2, h3, h4 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* Dot-matrix display font for massive headers */
+.dot-display {
+  font-family: var(--font-dot);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-left: 4px; /* Prevent first character clipping on Webkit browsers */
+}
+
+/* Global Typography Reveal Animation */
+.typography-reveal {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.typography-reveal > span {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+  filter: blur(8px);
+  animation: revealText 0.7s var(--ease-cinematic) forwards;
+}
+
+@keyframes revealText {
+  0% { transform: translateY(100%); opacity: 0; filter: blur(8px); }
+  100% { transform: translateY(0); opacity: 1; filter: blur(0); }
+}
+
+/* Typography scale */
+.display-large { font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.display-medium { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+.display-small { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -0.02em; }
+.headline-large { font-size: 2rem; font-weight: 600; }
+.headline-medium { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; }
+.headline-small { font-size: 1.25rem; font-weight: 600; }
+.title-large { font-size: 1.125rem; font-weight: 600; }
+.title-medium { font-size: 1rem; font-weight: 600; }
+.title-small { font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.body-large { font-size: 1rem; font-weight: 400; }
+.body-medium { font-size: 0.875rem; font-weight: 400; }
+.body-small { font-size: 0.75rem; font-weight: 400; }
+.label-medium { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.text-muted { color: var(--n-on-surface-muted); }
+.text-accent { color: var(--n-accent); }
+.text-accent-yellow { color: var(--n-accent-yellow); }
+
+/* === NOTHING OS CARD SYSTEM === */
+.n-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-24);
+  transition: all var(--duration-cinematic) var(--ease-cinematic);
+  will-change: transform, box-shadow, backdrop-filter;
+}
+
+.n-card:hover {
+  transform: translateY(-8px) perspective(800px) rotateX(2deg);
+  box-shadow: var(--shadow-3), var(--shadow-glow);
+  border-color: rgba(215, 25, 33, 0.3);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+.n-card-active, .n-card.selected {
+  border-color: var(--n-accent);
+}
+
+/* Inverted card (white on dark, dark on light) */
+.n-card-inverted {
+  background: var(--n-on-surface);
+  color: var(--n-bg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  padding: var(--space-24);
+}
+
+/* === NOTHING OS BUTTON SYSTEM === */
+.n-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  padding: var(--space-12) var(--space-24);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--n-outline);
+  background: transparent;
+  color: var(--n-on-surface);
+  cursor: pointer;
+  transition: all var(--duration-cinematic) var(--ease-cinematic);
+}
+
+.n-btn:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-2), var(--shadow-glow);
+  border-color: rgba(215, 25, 33, 0.4);
+}
+
+.n-btn-primary {
+  background: var(--n-on-surface);
+  color: var(--n-bg);
+  border: 2px solid var(--n-on-surface);
+  will-change: transform, box-shadow;
+}
+
+.n-btn-primary:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-3), 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.n-btn-accent {
+  background: var(--n-accent);
+  color: #FFFFFF;
+  border: 2px solid var(--n-accent);
+  will-change: transform, box-shadow;
+}
+
+.n-btn-accent:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 32px rgba(215, 25, 33, 0.35);
+  filter: brightness(1.1);
+}
+
+.n-btn-disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* === NOTHING OS INPUT SYSTEM === */
+.n-input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--n-outline);
+  color: var(--n-on-surface);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: var(--space-12) 0;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.n-input:focus {
+  border-bottom-color: var(--n-accent);
+}
+
+.n-input::placeholder {
+  color: var(--n-on-surface-muted);
+}
+
+/* === NOTHING RED ACCENT DOT === */
+.n-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--n-accent);
+  display: inline-block;
+}
+
+.n-dot-pulse {
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* === PAGE HEADER UTILITY === */
+.page-header {
+  padding: var(--space-24) var(--space-24) var(--space-16) var(--space-24);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  transition: all 0.3s var(--ease-cinematic);
+  /* default state */
+  background: transparent;
+}
+
+/* Pseudo-element infinitely expands background left/right without affecting child layout */
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: -50vw; right: -50vw;
+  background: transparent;
+  z-index: -1;
+  transition: all 0.3s var(--ease-cinematic);
+}
+
+.page-header.is-scrolled {
+  padding: var(--space-12) var(--space-24);
+}
+
+.page-header.is-scrolled::before {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Fix scrolled page header background in light mode */
+[data-theme="light"] .page-header.is-scrolled::before {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+/* Transform internal typography automatically inside a scrolled header */
+.page-header.is-scrolled h1,
+.page-header.is-scrolled h2 {
+  transform: scale(0.75);
+}
+
+.page-header h1,
+.page-header h2 {
+  transform-origin: left center;
+  transition: transform 0.4s var(--ease-cinematic);
+}
+
+/* Squeeze out the subtext descriptions */
+.page-header .text-muted {
+  max-height: 50px; /* enough max height for default appearance */
+  opacity: 1;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.2s ease, margin 0.3s ease;
+}
+
+.page-header.is-scrolled .text-muted {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .page-header {
+    padding: var(--space-32) 0 var(--space-24);
+  }
+  .page-header.is-scrolled {
+    padding: var(--space-16) 0 var(--space-16);
+  }
+}
+
+/* === DOT GRID BACKGROUND PATTERN (Nothing signature) === */
+.dot-grid-bg {
+  background-image: radial-gradient(circle, var(--n-outline) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Error text */
+.error-text {
+  color: var(--n-accent);
+}
+
+/* === Custom Glassmorphism Header Utility === */
+.glass-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(18, 18, 18, 0.4);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .glass-header {
+  background: rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+}
+

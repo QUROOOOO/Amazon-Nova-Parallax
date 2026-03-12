@@ -1,0 +1,289 @@
+.rich-editor-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: transparent;
+  animation: editorSlideIn 0.3s ease-out;
+}
+
+@keyframes editorSlideIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Toolbar */
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-12);
+  background: var(--n-surface-elevated);
+  border-bottom: 1px solid var(--n-outline);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  border-radius: 16px 16px 0 0;
+}
+
+[data-theme="light"] .editor-toolbar {
+  background: #f9fafb;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .toolbar-btn {
+  color: #374151;
+}
+
+[data-theme="light"] .toolbar-btn:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.toolbar-btn {
+  background: transparent;
+  color: var(--n-on-surface-muted);
+  border: none;
+  border-radius: var(--radius-xs);
+  padding: var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.toolbar-btn:hover {
+  background: var(--n-surface);
+  color: var(--n-on-surface);
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--n-outline);
+  margin: 0 var(--space-4);
+  opacity: 0.5;
+}
+
+/* Title */
+.editor-title-container {
+  padding: var(--space-20) var(--space-20) 0;
+  flex-shrink: 0;
+}
+
+.editor-title-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--n-outline);
+  color: var(--n-on-surface);
+  padding-bottom: var(--space-12);
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  transition: border-color 0.2s ease;
+}
+
+.editor-title-input:focus {
+  border-bottom-color: var(--n-accent);
+}
+
+.editor-title-input::placeholder {
+  color: var(--n-on-surface-muted);
+  opacity: 0.4;
+}
+
+/* Content Area */
+.editor-content {
+  flex: 1;
+  min-height: 0;
+  padding: var(--space-20);
+  color: var(--n-on-surface);
+  outline: none;
+  overflow-y: auto;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+.editor-content[data-placeholder]:empty:before {
+  content: attr(data-placeholder);
+  color: var(--n-on-surface-muted);
+  pointer-events: none;
+  display: block;
+  opacity: 0.4;
+}
+
+.editor-content h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: var(--space-8) 0;
+  letter-spacing: -0.01em;
+}
+
+.editor-content h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: var(--space-8) 0;
+}
+
+.editor-content ul, .editor-content ol {
+  padding-left: var(--space-24);
+  margin: var(--space-8) 0;
+}
+
+.editor-content pre {
+  background: var(--n-surface-elevated);
+  border: 1px solid var(--n-outline);
+  border-radius: var(--radius-xs);
+  padding: var(--space-12);
+  font-family: var(--font-dot);
+  font-size: 0.875rem;
+  overflow-x: auto;
+  margin: var(--space-8) 0;
+}
+
+.editor-content hr {
+  border: none;
+  border-top: 1px solid var(--n-outline);
+  margin: var(--space-16) 0;
+}
+
+/* ===== IMAGE STYLING: fixed 300px width, proportional height ===== */
+.editor-content img {
+  width: 300px;
+  height: auto;
+  border-radius: var(--radius-sm);
+  display: block;
+  object-fit: contain;
+}
+
+/* Image wrapper with X delete button */
+.note-img-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: var(--space-12) 0;
+  width: 300px;
+}
+
+.note-img-wrapper img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  display: block;
+  object-fit: contain;
+}
+
+.note-img-delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s ease;
+  line-height: 1;
+  padding: 0;
+}
+
+.note-img-delete-btn:hover {
+  background: #D71921;
+  border-color: #fff;
+  transform: scale(1.15);
+}
+
+/* Also style images in note cards (read-only grid view) */
+.idea-html-content img {
+  width: 300px;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  margin: var(--space-8) 0;
+  display: block;
+  object-fit: contain;
+}
+
+/* Footer */
+.editor-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-10) var(--space-16);
+  border-top: 1px solid var(--n-outline);
+  background: var(--n-surface-elevated);
+  flex-shrink: 0;
+}
+
+.word-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.editor-footer-actions {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.cancel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  background: transparent;
+  color: var(--n-on-surface-muted);
+  border: 1px solid var(--n-outline);
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.cancel-btn:hover {
+  border-color: var(--n-on-surface-muted);
+  color: var(--n-on-surface);
+}
+
+.save-note-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  background: var(--n-on-surface);
+  color: var(--n-bg);
+  border: none;
+  padding: var(--space-8) var(--space-20);
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.save-note-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.save-note-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

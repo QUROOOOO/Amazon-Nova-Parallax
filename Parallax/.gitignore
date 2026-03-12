@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.local
+.env.development
+*.env
+.DS_Store
+dist/
+build/
+backend/cdk.out/
+backend/cfn_outputs.json
+backend/us_east_1_outputs.json
+backend/check_env.js

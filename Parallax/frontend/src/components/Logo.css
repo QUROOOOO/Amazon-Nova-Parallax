@@ -1,0 +1,32 @@
+.n-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+.n-logo-dot-circle {
+  width: 36px;
+  height: 36px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.n-logo-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--n-on-surface);
+  transform-origin: center center;
+}
+
+.n-logo-text {
+  font-family: var(--font-dot);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--n-on-surface);
+  text-transform: uppercase;
+}

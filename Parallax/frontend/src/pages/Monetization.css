@@ -1,0 +1,222 @@
+.monetize-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.finance-dashboard {
+  padding: var(--space-12) var(--space-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .finance-dashboard {
+    padding: var(--space-16) var(--space-24);
+  }
+}
+
+.balance-card {
+  padding: var(--space-24);
+  border-radius: var(--radius-lg);
+  color: #FFFFFF;
+  background: linear-gradient(135deg, var(--md-sys-color-primary) 0%, var(--md-sys-color-secondary) 100%);
+  box-shadow: var(--shadow-2);
+}
+
+.balance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0.9;
+}
+
+.balance-amount {
+  font-family: var(--font-family-body);
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-top: var(--space-8);
+  letter-spacing: -0.02em;
+}
+
+.balance-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-16);
+}
+
+.badge-light {
+  background: rgba(255, 255, 255, 0.2);
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(4px);
+}
+
+.withdraw-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  background: var(--md-sys-color-on-primary);
+  color: var(--md-sys-color-primary);
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+@media (hover: hover) {
+  .withdraw-btn:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.opportunities-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.text-primary {
+  color: var(--md-sys-color-primary);
+}
+
+.text-success {
+  color: var(--n-accent-yellow);
+}
+
+.deals-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+/* Desktop: bento grid for deals */
+@media (min-width: 768px) {
+  .deals-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-16);
+  }
+
+  .deal-card:nth-child(1) {
+    grid-column: span 2;
+  }
+}
+
+.deal-card {
+  padding: var(--space-16);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
+}
+
+@media (hover: hover) {
+  .deal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-2);
+  }
+}
+
+.deal-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.deal-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-8);
+}
+
+.apply-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+@media (hover: hover) {
+  .apply-btn:hover {
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+  }
+}
+
+.pitch-generator {
+  padding: var(--space-20);
+  background: var(--md-sys-color-surface);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: var(--radius-lg);
+}
+
+.pitch-header {
+  display: flex;
+  align-items: center;
+}
+
+.pitch-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin-top: var(--space-16);
+}
+
+.brand-input {
+  background: var(--md-sys-color-surface-variant);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: var(--radius-md);
+  padding: var(--space-12) var(--space-16);
+  color: var(--md-sys-color-on-surface);
+  outline: none;
+  font-family: var(--font-family-body);
+  transition: border-color 0.2s;
+}
+
+.brand-input:focus {
+  border-color: var(--md-sys-color-primary);
+}
+
+.brand-input::placeholder {
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0.5;
+}
+
+.generate-pitch-btn {
+  padding: var(--space-12);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-family: var(--font-family-body);
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+@media (hover: hover) {
+  .generate-pitch-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+  }
+}

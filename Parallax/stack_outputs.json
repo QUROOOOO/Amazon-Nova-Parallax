@@ -1,0 +1,42 @@
+[
+    {
+        "OutputKey": "VibeCollabApiEndpoint5D193839",
+        "OutputValue": "https://hykjovvwj3.execute-api.us-east-1.amazonaws.com/prod/"
+    },
+    {
+        "OutputKey": "UserPoolClientId",
+        "OutputValue": "529u5us22kb9i4623j7e0fphlc"
+    },
+    {
+        "OutputKey": "UserPoolId",
+        "OutputValue": "us-east-1_09XMSdiDh"
+    },
+    {
+        "OutputKey": "ProfilesTableName",
+        "OutputValue": "BackendStack-ProfilesTable3B48B4C6-2WWF86O04000"
+    },
+    {
+        "OutputKey": "UsersTableName",
+        "OutputValue": "BackendStack-UsersTable9725E9C8-12FK0FRG7XB31"
+    },
+    {
+        "OutputKey": "ContentTableName",
+        "OutputValue": "BackendStack-ContentTableA82027C3-1H0TPKUJD8VBX"
+    },
+    {
+        "OutputKey": "ConnectionsTableName",
+        "OutputValue": "BackendStack-ConnectionsTable8000B8A1-1AI4O04YUZRLW"
+    },
+    {
+        "OutputKey": "ApiEndpoint",
+        "OutputValue": "https://hykjovvwj3.execute-api.us-east-1.amazonaws.com/prod/"
+    },
+    {
+        "OutputKey": "JobsTableName",
+        "OutputValue": "BackendStack-JobsTable1970BC16-156M77B2ECRJH"
+    },
+    {
+        "OutputKey": "ImageBucketName",
+        "OutputValue": "backendstack-vibecollabimagebucket1968a6d4-nyvkkbtfwndk"
+    }
+]

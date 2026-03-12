@@ -1,0 +1,25 @@
+.data-pulse-wrap {
+  width: 128px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+}
+
+.data-pulse-bar {
+  position: absolute;
+  top: 0;
+  left: -30%;
+  height: 100%;
+  width: 33%;
+  background: var(--n-accent, #D71921);
+  border-radius: 9999px;
+  animation: pulse-slide 0.8s ease-in-out infinite;
+}
+
+@keyframes pulse-slide {
+  0% { left: -30%; }
+  100% { left: 100%; }
+}

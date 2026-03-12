@@ -1,0 +1,43 @@
+/* === ENHANCED GEOMETRIC CURSOR === */
+
+/* Hide native cursor globally when custom cursor is active */
+.custom-cursor-active,
+.custom-cursor-active * {
+  cursor: none !important;
+}
+
+.vc-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  /* Top-left aligned for the arrow tip */
+  margin-top: -2px;
+  margin-left: -2px;
+  will-change: transform;
+  mix-blend-mode: normal;
+}
+
+/* Base state for the SVG */
+.cursor-svg {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  filter: drop-shadow(0px 2px 6px rgba(215, 25, 33, 0.2));
+}
+
+[data-theme="light"] .cursor-svg {
+  filter: drop-shadow(0px 2px 6px rgba(215, 25, 33, 0.15));
+}
+
+/* Hover state — morph and glow */
+.custom-cursor-hovering .cursor-svg {
+  transform: scale(1.2) rotate(-8deg);
+  filter: drop-shadow(0px 4px 12px rgba(215, 25, 33, 0.4));
+}
+
+/* Click state */
+.custom-cursor-clicking .cursor-svg {
+  transform: scale(0.8);
+  filter: drop-shadow(0px 1px 3px rgba(215, 25, 33, 0.5));
+}

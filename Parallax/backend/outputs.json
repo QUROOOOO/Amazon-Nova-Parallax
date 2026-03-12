@@ -1,0 +1,34 @@
+[
+    {
+        "OutputKey": "VibeCollabApiEndpoint5D193839",
+        "OutputValue": "https://si1uljs43l.execute-api.ap-south-1.amazonaws.com/prod/"
+    },
+    {
+        "OutputKey": "UserPoolClientId",
+        "OutputValue": "38fp31ldvukgfkq1bva2gpont6"
+    },
+    {
+        "OutputKey": "VideoBucketName",
+        "OutputValue": "backendstack-vibecollabvideobucket8ac9c3c0-ofkltbuv2bcs"
+    },
+    {
+        "OutputKey": "UserPoolId",
+        "OutputValue": "ap-south-1_f3PzVfTuF"
+    },
+    {
+        "OutputKey": "UsersTableName",
+        "OutputValue": "BackendStack-UsersTable9725E9C8-QY6JO98IMTGM"
+    },
+    {
+        "OutputKey": "ContentTableName",
+        "OutputValue": "BackendStack-ContentTableA82027C3-8O7NKVJVGP4T"
+    },
+    {
+        "OutputKey": "ApiEndpoint",
+        "OutputValue": "https://si1uljs43l.execute-api.ap-south-1.amazonaws.com/prod/"
+    },
+    {
+        "OutputKey": "ImageBucketName",
+        "OutputValue": "backendstack-vibecollabimagebucket1968a6d4-cajtiwi7ys17"
+    }
+]

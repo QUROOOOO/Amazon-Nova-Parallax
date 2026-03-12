@@ -1,0 +1,601 @@
+2026-02-28T21:45:44.948000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e INIT_START Runtime Version: nodejs:20.v95	Runtime Version ARN: arn:aws:lambda:ap-south-1::runtime:2d788b26ac416854c5eb831c9f46cb2e0a0ddcee84b1a9b114acbdfdb644c8c1
+2026-02-28T21:45:45.510000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e START RequestId: 3d509fdd-fd06-405f-83fb-f34b1acf3365 Version: $LATEST
+2026-02-28T21:45:45.512000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:45.512Z	3d509fdd-fd06-405f-83fb-f34b1acf3365	INFO	UrlIngest handler invoked: {
+  "resource": "/repurpose/ingest-url",
+  "path": "/repurpose/ingest-url",
+  "httpMethod": "POST",
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Authorization": "eyJraWQiOiJ4OWp5dU1nUitmemFTUGJvdlFNYjRQbkpIbUFLRWcwd1wvWTJkYXN0ZUFPYz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1MTUzZmRkYS1lMDAxLTcwNjYtMjc1YS05NzJkM2M3MDhkNGEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLXNvdXRoLTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGgtMV91bWJiOEpDaFMiLCJjb2duaXRvOnVzZXJuYW1lIjoiNTE1M2ZkZGEtZTAwMS03MDY2LTI3NWEtOTcyZDNjNzA4ZDRhIiwib3JpZ2luX2p0aSI6ImExMDc5Yzk4LWI1Y2MtNGU4NS04MjMxLTU1ZDU4OTYyOTljMSIsImF1ZCI6IjF2NThsZDlzdjRyc2R1djJwMzM2dXV0YTFqIiwiZXZlbnRfaWQiOiJkZDExNzE2ZS03NDg1LTRmODAtYWQwMi03YzJmNTY2N2ZjOTUiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTc3MjMwMTAxNiwiZXhwIjoxNzcyMzE1OTYwLCJpYXQiOjE3NzIzMTIzNjAsImp0aSI6ImUzNGI3M2NkLTk2OWEtNGMxOS05OWE0LTljMGVhYzkzYTA4ZCIsImVtYWlsIjoicXVhbGNvbW1nYW1pbmcyMkBnbWFpbC5jb20ifQ.GCdx-x3MSFWigUrJuFc_FJ8zBXUxCgNFdNrfyyaVE69GiiFD4NGAOImfg9LcXyN2iOqcdJ3_Lf_awVJRKlb4jyiU9_nonDnOE_VKa2qB05AAY6THB1mdrjDK-MKERJSVjjeHfoElWZJSiJbfN1n9LU6G-5Cef7rYJYBX5UD-c62z-2FWjd3Rbxxe8woaHFZo05RVH6BGykYcLhEd688xvssNE0tTNcR0vhwejumT_v6zeGlSd0xe0Bs0W0AtxueLG5636aeZHzrXrOWT2zbiBNO7dTDORtrX6TpR1nNPNqr-HlTJcb_UBeFePBjdXPIbqIUHG9CcNTvCZCFgB8xesQ",
+    "CloudFront-Forwarded-Proto": "https",
+    "CloudFront-Is-Desktop-Viewer": "true",
+    "CloudFront-Is-Mobile-Viewer": "false",
+    "CloudFront-Is-SmartTV-Viewer": "false",
+    "CloudFront-Is-Tablet-Viewer": "false",
+    "CloudFront-Viewer-ASN": "55947",
+    "CloudFront-Viewer-Country": "IN",
+    "content-type": "application/json; charset=UTF-8",
+    "Host": "si1uljs43l.execute-api.ap-south-1.amazonaws.com",
+    "origin": "http://localhost:5173",
+    "priority": "u=1, i",
+    "Referer": "http://localhost:5173/",
+    "sec-ch-ua": "\"Not:A-Brand\";v=\"99\", \"Google Chrome\";v=\"145\", \"Chromium\";v=\"145\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    "Via": "2.0 440db74cad7e7ff55da1ebcfc680bc02.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Id": "eyiJ5sq7p9FY5m6N9Wn5oTpnhVWTYdThi5YKRu6wxXQExp6Dw_Ge3g==",
+    "X-Amzn-Trace-Id": "Root=1-69a36208-05c19ff24430d7ff48032ca3",
+    "X-Forwarded-For": "103.39.127.43, 18.68.10.113",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "multiValueHeaders": {
+    "Accept": [
+      "*/*"
+    ],
+    "Accept-Encoding": [
+      "gzip, deflate, br, zstd"
+    ],
+    "Accept-Language": [
+      "en-US,en;q=0.9"
+    ],
+    "Authorization": [
+      "eyJraWQiOiJ4OWp5dU1nUitmemFTUGJvdlFNYjRQbkpIbUFLRWcwd1wvWTJkYXN0ZUFPYz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1MTUzZmRkYS1lMDAxLTcwNjYtMjc1YS05NzJkM2M3MDhkNGEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLXNvdXRoLTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGgtMV91bWJiOEpDaFMiLCJjb2duaXRvOnVzZXJuYW1lIjoiNTE1M2ZkZGEtZTAwMS03MDY2LTI3NWEtOTcyZDNjNzA4ZDRhIiwib3JpZ2luX2p0aSI6ImExMDc5Yzk4LWI1Y2MtNGU4NS04MjMxLTU1ZDU4OTYyOTljMSIsImF1ZCI6IjF2NThsZDlzdjRyc2R1djJwMzM2dXV0YTFqIiwiZXZlbnRfaWQiOiJkZDExNzE2ZS03NDg1LTRmODAtYWQwMi03YzJmNTY2N2ZjOTUiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTc3MjMwMTAxNiwiZXhwIjoxNzcyMzE1OTYwLCJpYXQiOjE3NzIzMTIzNjAsImp0aSI6ImUzNGI3M2NkLTk2OWEtNGMxOS05OWE0LTljMGVhYzkzYTA4ZCIsImVtYWlsIjoicXVhbGNvbW1nYW1pbmcyMkBnbWFpbC5jb20ifQ.GCdx-x3MSFWigUrJuFc_FJ8zBXUxCgNFdNrfyyaVE69GiiFD4NGAOImfg9LcXyN2iOqcdJ3_Lf_awVJRKlb4jyiU9_nonDnOE_VKa2qB05AAY6THB1mdrjDK-MKERJSVjjeHfoElWZJSiJbfN1n9LU6G-5Cef7rYJYBX5UD-c62z-2FWjd3Rbxxe8woaHFZo05RVH6BGykYcLhEd688xvssNE0tTNcR0vhwejumT_v6zeGlSd0xe0Bs0W0AtxueLG5636aeZHzrXrOWT2zbiBNO7dTDORtrX6TpR1nNPNqr-HlTJcb_UBeFePBjdXPIbqIUHG9CcNTvCZCFgB8xesQ"
+    ],
+    "CloudFront-Forwarded-Proto": [
+      "https"
+    ],
+    "CloudFront-Is-Desktop-Viewer": [
+      "true"
+    ],
+    "CloudFront-Is-Mobile-Viewer": [
+      "false"
+    ],
+    "CloudFront-Is-SmartTV-Viewer": [
+      "false"
+    ],
+    "CloudFront-Is-Tablet-Viewer": [
+      "false"
+    ],
+    "CloudFront-Viewer-ASN": [
+      "55947"
+    ],
+    "CloudFront-Viewer-Country": [
+      "IN"
+    ],
+    "content-type": [
+      "application/json; charset=UTF-8"
+    ],
+    "Host": [
+      "si1uljs43l.execute-api.ap-south-1.amazonaws.com"
+    ],
+    "origin": [
+      "http://localhost:5173"
+    ],
+    "priority": [
+      "u=1, i"
+    ],
+    "Referer": [
+      "http://localhost:5173/"
+    ],
+    "sec-ch-ua": [
+      "\"Not:A-Brand\";v=\"99\", \"Google Chrome\";v=\"145\", \"Chromium\";v=\"145\""
+    ],
+    "sec-ch-ua-mobile": [
+      "?0"
+    ],
+    "sec-ch-ua-platform": [
+      "\"Windows\""
+    ],
+    "sec-fetch-dest": [
+      "empty"
+    ],
+    "sec-fetch-mode": [
+      "cors"
+    ],
+    "sec-fetch-site": [
+      "cross-site"
+    ],
+    "User-Agent": [
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+    ],
+    "Via": [
+      "2.0 440db74cad7e7ff55da1ebcfc680bc02.cloudfront.net (CloudFront)"
+    ],
+    "X-Amz-Cf-Id": [
+      "eyiJ5sq7p9FY5m6N9Wn5oTpnhVWTYdThi5YKRu6wxXQExp6Dw_Ge3g=="
+    ],
+    "X-Amzn-Trace-Id": [
+      "Root=1-69a36208-05c19ff24430d7ff48032ca3"
+    ],
+    "X-Forwarded-For": [
+      "103.39.127.43, 18.68.10.113"
+    ],
+    "X-Forwarded-Port": [
+      "443"
+    ],
+    "X-Forwarded-Proto": [
+      "https"
+    ]
+  },
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "a3mx5g",
+    "authorizer": {
+      "claims": {
+        "sub": "5153fdda-e001-7066-275a-972d3c708d4a",
+        "email_verified": "true",
+        "iss": "https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_umbb8JChS",
+        "cognito:username": "5153fdda-e001-7066-275a-972d3c708d4a",
+        "origin_jti": "a1079c98-b5cc-4e85-8231-55d5896299c1",
+        "aud": "1v58ld9sv4rsduv2p336uuta1j",
+        "event_id": "dd11716e-7485-4f80-ad02-7c2f5667fc95",
+        "token_use": "id",
+        "auth_time": "1772301016",
+        "exp": "Sat Feb 28 21:59:20 UTC 2026",
+        "iat": "Sat Feb 28 20:59:20 UTC 2026",
+        "jti": "e34b73cd-969a-4c19-99a4-9c0eac93a08d",
+        "email": "qualcommgaming22@gmail.com"
+      }
+    },
+    "resourcePath": "/repurpose/ingest-url",
+    "httpMethod": "POST",
+    "extendedRequestId": "ZgxBbG71hcwEP8w=",
+    "requestTime": "28/Feb/2026:21:45:44 +0000",
+    "path": "/prod/repurpose/ingest-url",
+    "accountId": "183728152836",
+    "protocol": "HTTP/1.1",
+    "stage": "prod",
+    "domainPrefix": "si1uljs43l",
+    "requestTimeEpoch": 1772315144750,
+    "requestId": "0504c31e-857b-4264-89bf-fe9cd39c185b",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "cognitoIdentityId": null,
+      "caller": null,
+      "sourceIp": "103.39.127.43",
+      "principalOrgId": null,
+      "accessKey": null,
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "user": null
+    },
+    "domainName": "si1uljs43l.execute-api.ap-south-1.amazonaws.com",
+    "deploymentId": "7gc03q",
+    "apiId": "si1uljs43l"
+  },
+  "body": "{\"url\":\"https://youtu.be/D-YDEyuDxWU?si=ZZLgOi39qVommTgY\"}",
+  "isBase64Encoded": false
+}
+2026-02-28T21:45:45.667000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:45.667Z	3d509fdd-fd06-405f-83fb-f34b1acf3365	INFO	Detected YouTube URL. Getting info...
+2026-02-28T21:45:47.161000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:47.161Z	3d509fdd-fd06-405f-83fb-f34b1acf3365	ERROR	Streaming error: MinigetError: Status code: 410
+    at ClientRequest.<anonymous> (/var/task/node_modules/miniget/dist/index.js:206:27)
+    at Object.onceWrapper (node:events:639:26)
+    at ClientRequest.emit (node:events:524:28)
+    at HTTPParser.parserOnIncomingClient (node:_http_client:702:27)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:118:17)
+    at TLSSocket.socketOnData (node:_http_client:544:22)
+    at TLSSocket.emit (node:events:524:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5) {
+  statusCode: 410
+}
+2026-02-28T21:45:47.165000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:47.165Z	3d509fdd-fd06-405f-83fb-f34b1acf3365	ERROR	Error in UrlIngest handler: TypeError: (intermediate value).catch is not a function
+    at updateStage (/var/task/index.js:124:11)
+    at exports.handler (/var/task/index.js:95:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-02-28T21:45:47.167000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e END RequestId: 3d509fdd-fd06-405f-83fb-f34b1acf3365
+2026-02-28T21:45:47.168000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e REPORT RequestId: 3d509fdd-fd06-405f-83fb-f34b1acf3365	Duration: 1656.59 ms	Billed Duration: 2215 ms	Memory Size: 1024 MB	Max Memory Used: 112 MB	Init Duration: 558.16 ms
+2026-02-28T21:45:47.508000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e START RequestId: f1cabbd0-4203-43e0-9d44-67b2c8e6815e Version: $LATEST
+2026-02-28T21:45:47.509000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:47.509Z	f1cabbd0-4203-43e0-9d44-67b2c8e6815e	INFO	UrlIngest handler invoked: {
+  "resource": "/repurpose/ingest-url",
+  "path": "/repurpose/ingest-url",
+  "httpMethod": "POST",
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Authorization": "eyJraWQiOiJ4OWp5dU1nUitmemFTUGJvdlFNYjRQbkpIbUFLRWcwd1wvWTJkYXN0ZUFPYz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1MTUzZmRkYS1lMDAxLTcwNjYtMjc1YS05NzJkM2M3MDhkNGEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLXNvdXRoLTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGgtMV91bWJiOEpDaFMiLCJjb2duaXRvOnVzZXJuYW1lIjoiNTE1M2ZkZGEtZTAwMS03MDY2LTI3NWEtOTcyZDNjNzA4ZDRhIiwib3JpZ2luX2p0aSI6ImExMDc5Yzk4LWI1Y2MtNGU4NS04MjMxLTU1ZDU4OTYyOTljMSIsImF1ZCI6IjF2NThsZDlzdjRyc2R1djJwMzM2dXV0YTFqIiwiZXZlbnRfaWQiOiJkZDExNzE2ZS03NDg1LTRmODAtYWQwMi03YzJmNTY2N2ZjOTUiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTc3MjMwMTAxNiwiZXhwIjoxNzcyMzE1OTYwLCJpYXQiOjE3NzIzMTIzNjAsImp0aSI6ImUzNGI3M2NkLTk2OWEtNGMxOS05OWE0LTljMGVhYzkzYTA4ZCIsImVtYWlsIjoicXVhbGNvbW1nYW1pbmcyMkBnbWFpbC5jb20ifQ.GCdx-x3MSFWigUrJuFc_FJ8zBXUxCgNFdNrfyyaVE69GiiFD4NGAOImfg9LcXyN2iOqcdJ3_Lf_awVJRKlb4jyiU9_nonDnOE_VKa2qB05AAY6THB1mdrjDK-MKERJSVjjeHfoElWZJSiJbfN1n9LU6G-5Cef7rYJYBX5UD-c62z-2FWjd3Rbxxe8woaHFZo05RVH6BGykYcLhEd688xvssNE0tTNcR0vhwejumT_v6zeGlSd0xe0Bs0W0AtxueLG5636aeZHzrXrOWT2zbiBNO7dTDORtrX6TpR1nNPNqr-HlTJcb_UBeFePBjdXPIbqIUHG9CcNTvCZCFgB8xesQ",
+    "CloudFront-Forwarded-Proto": "https",
+    "CloudFront-Is-Desktop-Viewer": "true",
+    "CloudFront-Is-Mobile-Viewer": "false",
+    "CloudFront-Is-SmartTV-Viewer": "false",
+    "CloudFront-Is-Tablet-Viewer": "false",
+    "CloudFront-Viewer-ASN": "55947",
+    "CloudFront-Viewer-Country": "IN",
+    "content-type": "application/json; charset=UTF-8",
+    "Host": "si1uljs43l.execute-api.ap-south-1.amazonaws.com",
+    "origin": "http://localhost:5173",
+    "priority": "u=1, i",
+    "Referer": "http://localhost:5173/",
+    "sec-ch-ua": "\"Not:A-Brand\";v=\"99\", \"Google Chrome\";v=\"145\", \"Chromium\";v=\"145\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    "Via": "2.0 440db74cad7e7ff55da1ebcfc680bc02.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Id": "5VsA-bVWD61Ti5N6ImaSol8V8ZnxY9v-fmpYX46YQKtIkZgXNTs3vw==",
+    "X-Amzn-Trace-Id": "Root=1-69a3620b-35ff3b484fe88c2f3c7fc0b1",
+    "X-Forwarded-For": "103.39.127.43, 18.68.10.76",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "multiValueHeaders": {
+    "Accept": [
+      "*/*"
+    ],
+    "Accept-Encoding": [
+      "gzip, deflate, br, zstd"
+    ],
+    "Accept-Language": [
+      "en-US,en;q=0.9"
+    ],
+    "Authorization": [
+      "eyJraWQiOiJ4OWp5dU1nUitmemFTUGJvdlFNYjRQbkpIbUFLRWcwd1wvWTJkYXN0ZUFPYz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1MTUzZmRkYS1lMDAxLTcwNjYtMjc1YS05NzJkM2M3MDhkNGEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLXNvdXRoLTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGgtMV91bWJiOEpDaFMiLCJjb2duaXRvOnVzZXJuYW1lIjoiNTE1M2ZkZGEtZTAwMS03MDY2LTI3NWEtOTcyZDNjNzA4ZDRhIiwib3JpZ2luX2p0aSI6ImExMDc5Yzk4LWI1Y2MtNGU4NS04MjMxLTU1ZDU4OTYyOTljMSIsImF1ZCI6IjF2NThsZDlzdjRyc2R1djJwMzM2dXV0YTFqIiwiZXZlbnRfaWQiOiJkZDExNzE2ZS03NDg1LTRmODAtYWQwMi03YzJmNTY2N2ZjOTUiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTc3MjMwMTAxNiwiZXhwIjoxNzcyMzE1OTYwLCJpYXQiOjE3NzIzMTIzNjAsImp0aSI6ImUzNGI3M2NkLTk2OWEtNGMxOS05OWE0LTljMGVhYzkzYTA4ZCIsImVtYWlsIjoicXVhbGNvbW1nYW1pbmcyMkBnbWFpbC5jb20ifQ.GCdx-x3MSFWigUrJuFc_FJ8zBXUxCgNFdNrfyyaVE69GiiFD4NGAOImfg9LcXyN2iOqcdJ3_Lf_awVJRKlb4jyiU9_nonDnOE_VKa2qB05AAY6THB1mdrjDK-MKERJSVjjeHfoElWZJSiJbfN1n9LU6G-5Cef7rYJYBX5UD-c62z-2FWjd3Rbxxe8woaHFZo05RVH6BGykYcLhEd688xvssNE0tTNcR0vhwejumT_v6zeGlSd0xe0Bs0W0AtxueLG5636aeZHzrXrOWT2zbiBNO7dTDORtrX6TpR1nNPNqr-HlTJcb_UBeFePBjdXPIbqIUHG9CcNTvCZCFgB8xesQ"
+    ],
+    "CloudFront-Forwarded-Proto": [
+      "https"
+    ],
+    "CloudFront-Is-Desktop-Viewer": [
+      "true"
+    ],
+    "CloudFront-Is-Mobile-Viewer": [
+      "false"
+    ],
+    "CloudFront-Is-SmartTV-Viewer": [
+      "false"
+    ],
+    "CloudFront-Is-Tablet-Viewer": [
+      "false"
+    ],
+    "CloudFront-Viewer-ASN": [
+      "55947"
+    ],
+    "CloudFront-Viewer-Country": [
+      "IN"
+    ],
+    "content-type": [
+      "application/json; charset=UTF-8"
+    ],
+    "Host": [
+      "si1uljs43l.execute-api.ap-south-1.amazonaws.com"
+    ],
+    "origin": [
+      "http://localhost:5173"
+    ],
+    "priority": [
+      "u=1, i"
+    ],
+    "Referer": [
+      "http://localhost:5173/"
+    ],
+    "sec-ch-ua": [
+      "\"Not:A-Brand\";v=\"99\", \"Google Chrome\";v=\"145\", \"Chromium\";v=\"145\""
+    ],
+    "sec-ch-ua-mobile": [
+      "?0"
+    ],
+    "sec-ch-ua-platform": [
+      "\"Windows\""
+    ],
+    "sec-fetch-dest": [
+      "empty"
+    ],
+    "sec-fetch-mode": [
+      "cors"
+    ],
+    "sec-fetch-site": [
+      "cross-site"
+    ],
+    "User-Agent": [
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+    ],
+    "Via": [
+      "2.0 440db74cad7e7ff55da1ebcfc680bc02.cloudfront.net (CloudFront)"
+    ],
+    "X-Amz-Cf-Id": [
+      "5VsA-bVWD61Ti5N6ImaSol8V8ZnxY9v-fmpYX46YQKtIkZgXNTs3vw=="
+    ],
+    "X-Amzn-Trace-Id": [
+      "Root=1-69a3620b-35ff3b484fe88c2f3c7fc0b1"
+    ],
+    "X-Forwarded-For": [
+      "103.39.127.43, 18.68.10.76"
+    ],
+    "X-Forwarded-Port": [
+      "443"
+    ],
+    "X-Forwarded-Proto": [
+      "https"
+    ]
+  },
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "a3mx5g",
+    "authorizer": {
+      "claims": {
+        "sub": "5153fdda-e001-7066-275a-972d3c708d4a",
+        "email_verified": "true",
+        "iss": "https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_umbb8JChS",
+        "cognito:username": "5153fdda-e001-7066-275a-972d3c708d4a",
+        "origin_jti": "a1079c98-b5cc-4e85-8231-55d5896299c1",
+        "aud": "1v58ld9sv4rsduv2p336uuta1j",
+        "event_id": "dd11716e-7485-4f80-ad02-7c2f5667fc95",
+        "token_use": "id",
+        "auth_time": "1772301016",
+        "exp": "Sat Feb 28 21:59:20 UTC 2026",
+        "iat": "Sat Feb 28 20:59:20 UTC 2026",
+        "jti": "e34b73cd-969a-4c19-99a4-9c0eac93a08d",
+        "email": "qualcommgaming22@gmail.com"
+      }
+    },
+    "resourcePath": "/repurpose/ingest-url",
+    "httpMethod": "POST",
+    "extendedRequestId": "ZgxB2GcthcwEKlA=",
+    "requestTime": "28/Feb/2026:21:45:47 +0000",
+    "path": "/prod/repurpose/ingest-url",
+    "accountId": "183728152836",
+    "protocol": "HTTP/1.1",
+    "stage": "prod",
+    "domainPrefix": "si1uljs43l",
+    "requestTimeEpoch": 1772315147476,
+    "requestId": "e982ed9f-d712-44a7-b775-c3147d9923ca",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "cognitoIdentityId": null,
+      "caller": null,
+      "sourceIp": "103.39.127.43",
+      "principalOrgId": null,
+      "accessKey": null,
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "user": null
+    },
+    "domainName": "si1uljs43l.execute-api.ap-south-1.amazonaws.com",
+    "deploymentId": "7gc03q",
+    "apiId": "si1uljs43l"
+  },
+  "body": "{\"url\":\"https://youtu.be/D-YDEyuDxWU?si=ZZLgOi39qVommTgY\"}",
+  "isBase64Encoded": false
+}
+2026-02-28T21:45:47.519000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:47.519Z	f1cabbd0-4203-43e0-9d44-67b2c8e6815e	INFO	Detected YouTube URL. Getting info...
+2026-02-28T21:45:48.781000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:48.781Z	f1cabbd0-4203-43e0-9d44-67b2c8e6815e	ERROR	Streaming error: MinigetError: Status code: 410
+    at ClientRequest.<anonymous> (/var/task/node_modules/miniget/dist/index.js:206:27)
+    at Object.onceWrapper (node:events:639:26)
+    at ClientRequest.emit (node:events:524:28)
+    at HTTPParser.parserOnIncomingClient (node:_http_client:702:27)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:118:17)
+    at TLSSocket.socketOnData (node:_http_client:544:22)
+    at TLSSocket.emit (node:events:524:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5) {
+  statusCode: 410
+}
+2026-02-28T21:45:48.782000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:48.782Z	f1cabbd0-4203-43e0-9d44-67b2c8e6815e	ERROR	Error in UrlIngest handler: TypeError: (intermediate value).catch is not a function
+    at updateStage (/var/task/index.js:124:11)
+    at exports.handler (/var/task/index.js:95:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-02-28T21:45:48.784000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e END RequestId: f1cabbd0-4203-43e0-9d44-67b2c8e6815e
+2026-02-28T21:45:48.784000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e REPORT RequestId: f1cabbd0-4203-43e0-9d44-67b2c8e6815e	Duration: 1275.33 ms	Billed Duration: 1276 ms	Memory Size: 1024 MB	Max Memory Used: 119 MB
+2026-02-28T21:45:49.332000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:49.332Z	fdde7e98-6c36-481c-9692-7e2cf9276ac8	INFO	UrlIngest handler invoked: {
+  "resource": "/repurpose/ingest-url",
+  "path": "/repurpose/ingest-url",
+  "httpMethod": "POST",
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Authorization": "eyJraWQiOiJ4OWp5dU1nUitmemFTUGJvdlFNYjRQbkpIbUFLRWcwd1wvWTJkYXN0ZUFPYz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1MTUzZmRkYS1lMDAxLTcwNjYtMjc1YS05NzJkM2M3MDhkNGEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLXNvdXRoLTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGgtMV91bWJiOEpDaFMiLCJjb2duaXRvOnVzZXJuYW1lIjoiNTE1M2ZkZGEtZTAwMS03MDY2LTI3NWEtOTcyZDNjNzA4ZDRhIiwib3JpZ2luX2p0aSI6ImExMDc5Yzk4LWI1Y2MtNGU4NS04MjMxLTU1ZDU4OTYyOTljMSIsImF1ZCI6IjF2NThsZDlzdjRyc2R1djJwMzM2dXV0YTFqIiwiZXZlbnRfaWQiOiJkZDExNzE2ZS03NDg1LTRmODAtYWQwMi03YzJmNTY2N2ZjOTUiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTc3MjMwMTAxNiwiZXhwIjoxNzcyMzE1OTYwLCJpYXQiOjE3NzIzMTIzNjAsImp0aSI6ImUzNGI3M2NkLTk2OWEtNGMxOS05OWE0LTljMGVhYzkzYTA4ZCIsImVtYWlsIjoicXVhbGNvbW1nYW1pbmcyMkBnbWFpbC5jb20ifQ.GCdx-x3MSFWigUrJuFc_FJ8zBXUxCgNFdNrfyyaVE69GiiFD4NGAOImfg9LcXyN2iOqcdJ3_Lf_awVJRKlb4jyiU9_nonDnOE_VKa2qB05AAY6THB1mdrjDK-MKERJSVjjeHfoElWZJSiJbfN1n9LU6G-5Cef7rYJYBX5UD-c62z-2FWjd3Rbxxe8woaHFZo05RVH6BGykYcLhEd688xvssNE0tTNcR0vhwejumT_v6zeGlSd0xe0Bs0W0AtxueLG5636aeZHzrXrOWT2zbiBNO7dTDORtrX6TpR1nNPNqr-HlTJcb_UBeFePBjdXPIbqIUHG9CcNTvCZCFgB8xesQ",
+    "CloudFront-Forwarded-Proto": "https",
+    "CloudFront-Is-Desktop-Viewer": "true",
+    "CloudFront-Is-Mobile-Viewer": "false",
+    "CloudFront-Is-SmartTV-Viewer": "false",
+    "CloudFront-Is-Tablet-Viewer": "false",
+    "CloudFront-Viewer-ASN": "55947",
+    "CloudFront-Viewer-Country": "IN",
+    "content-type": "application/json; charset=UTF-8",
+    "Host": "si1uljs43l.execute-api.ap-south-1.amazonaws.com",
+    "origin": "http://localhost:5173",
+    "priority": "u=1, i",
+    "Referer": "http://localhost:5173/",
+    "sec-ch-ua": "\"Not:A-Brand\";v=\"99\", \"Google Chrome\";v=\"145\", \"Chromium\";v=\"145\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "cross-site",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    "Via": "2.0 440db74cad7e7ff55da1ebcfc680bc02.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Id": "Auuv5B3yqqW8RfeIdgc1D1V_qqP0tg21xlV7xlq8Lc0CigB4TmJgXw==",
+    "X-Amzn-Trace-Id": "Root=1-69a3620d-07d3727e7a0025756398d16b",
+    "X-Forwarded-For": "103.39.127.43, 18.68.10.116",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "multiValueHeaders": {
+    "Accept": [
+      "*/*"
+    ],
+    "Accept-Encoding": [
+      "gzip, deflate, br, zstd"
+    ],
+    "Accept-Language": [
+      "en-US,en;q=0.9"
+    ],
+    "Authorization": [
+      "eyJraWQiOiJ4OWp5dU1nUitmemFTUGJvdlFNYjRQbkpIbUFLRWcwd1wvWTJkYXN0ZUFPYz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1MTUzZmRkYS1lMDAxLTcwNjYtMjc1YS05NzJkM2M3MDhkNGEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmFwLXNvdXRoLTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGgtMV91bWJiOEpDaFMiLCJjb2duaXRvOnVzZXJuYW1lIjoiNTE1M2ZkZGEtZTAwMS03MDY2LTI3NWEtOTcyZDNjNzA4ZDRhIiwib3JpZ2luX2p0aSI6ImExMDc5Yzk4LWI1Y2MtNGU4NS04MjMxLTU1ZDU4OTYyOTljMSIsImF1ZCI6IjF2NThsZDlzdjRyc2R1djJwMzM2dXV0YTFqIiwiZXZlbnRfaWQiOiJkZDExNzE2ZS03NDg1LTRmODAtYWQwMi03YzJmNTY2N2ZjOTUiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTc3MjMwMTAxNiwiZXhwIjoxNzcyMzE1OTYwLCJpYXQiOjE3NzIzMTIzNjAsImp0aSI6ImUzNGI3M2NkLTk2OWEtNGMxOS05OWE0LTljMGVhYzkzYTA4ZCIsImVtYWlsIjoicXVhbGNvbW1nYW1pbmcyMkBnbWFpbC5jb20ifQ.GCdx-x3MSFWigUrJuFc_FJ8zBXUxCgNFdNrfyyaVE69GiiFD4NGAOImfg9LcXyN2iOqcdJ3_Lf_awVJRKlb4jyiU9_nonDnOE_VKa2qB05AAY6THB1mdrjDK-MKERJSVjjeHfoElWZJSiJbfN1n9LU6G-5Cef7rYJYBX5UD-c62z-2FWjd3Rbxxe8woaHFZo05RVH6BGykYcLhEd688xvssNE0tTNcR0vhwejumT_v6zeGlSd0xe0Bs0W0AtxueLG5636aeZHzrXrOWT2zbiBNO7dTDORtrX6TpR1nNPNqr-HlTJcb_UBeFePBjdXPIbqIUHG9CcNTvCZCFgB8xesQ"
+    ],
+    "CloudFront-Forwarded-Proto": [
+      "https"
+    ],
+    "CloudFront-Is-Desktop-Viewer": [
+      "true"
+    ],
+    "CloudFront-Is-Mobile-Viewer": [
+      "false"
+    ],
+    "CloudFront-Is-SmartTV-Viewer": [
+      "false"
+    ],
+    "CloudFront-Is-Tablet-Viewer": [
+      "false"
+    ],
+    "CloudFront-Viewer-ASN": [
+      "55947"
+    ],
+    "CloudFront-Viewer-Country": [
+      "IN"
+    ],
+    "content-type": [
+      "application/json; charset=UTF-8"
+    ],
+    "Host": [
+      "si1uljs43l.execute-api.ap-south-1.amazonaws.com"
+    ],
+    "origin": [
+      "http://localhost:5173"
+    ],
+    "priority": [
+      "u=1, i"
+    ],
+    "Referer": [
+      "http://localhost:5173/"
+    ],
+    "sec-ch-ua": [
+      "\"Not:A-Brand\";v=\"99\", \"Google Chrome\";v=\"145\", \"Chromium\";v=\"145\""
+    ],
+    "sec-ch-ua-mobile": [
+      "?0"
+    ],
+    "sec-ch-ua-platform": [
+      "\"Windows\""
+    ],
+    "sec-fetch-dest": [
+      "empty"
+    ],
+    "sec-fetch-mode": [
+      "cors"
+    ],
+    "sec-fetch-site": [
+      "cross-site"
+    ],
+    "User-Agent": [
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+    ],
+    "Via": [
+      "2.0 440db74cad7e7ff55da1ebcfc680bc02.cloudfront.net (CloudFront)"
+    ],
+    "X-Amz-Cf-Id": [
+      "Auuv5B3yqqW8RfeIdgc1D1V_qqP0tg21xlV7xlq8Lc0CigB4TmJgXw=="
+    ],
+    "X-Amzn-Trace-Id": [
+      "Root=1-69a3620d-07d3727e7a0025756398d16b"
+    ],
+    "X-Forwarded-For": [
+      "103.39.127.43, 18.68.10.116"
+    ],
+    "X-Forwarded-Port": [
+      "443"
+    ],
+    "X-Forwarded-Proto": [
+      "https"
+    ]
+  },
+  "queryStringParameters": null,
+  "multiValueQueryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "requestContext": {
+    "resourceId": "a3mx5g",
+    "authorizer": {
+      "claims": {
+        "sub": "5153fdda-e001-7066-275a-972d3c708d4a",
+        "email_verified": "true",
+        "iss": "https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_umbb8JChS",
+        "cognito:username": "5153fdda-e001-7066-275a-972d3c708d4a",
+        "origin_jti": "a1079c98-b5cc-4e85-8231-55d5896299c1",
+        "aud": "1v58ld9sv4rsduv2p336uuta1j",
+        "event_id": "dd11716e-7485-4f80-ad02-7c2f5667fc95",
+        "token_use": "id",
+        "auth_time": "1772301016",
+        "exp": "Sat Feb 28 21:59:20 UTC 2026",
+        "iat": "Sat Feb 28 20:59:20 UTC 2026",
+        "jti": "e34b73cd-969a-4c19-99a4-9c0eac93a08d",
+        "email": "qualcommgaming22@gmail.com"
+      }
+    },
+    "resourcePath": "/repurpose/ingest-url",
+    "httpMethod": "POST",
+    "extendedRequestId": "ZgxCJFy6BcwEIMQ=",
+    "requestTime": "28/Feb/2026:21:45:49 +0000",
+    "path": "/prod/repurpose/ingest-url",
+    "accountId": "183728152836",
+    "protocol": "HTTP/1.1",
+    "stage": "prod",
+    "domainPrefix": "si1uljs43l",
+    "requestTimeEpoch": 1772315149318,
+    "requestId": "546fbfb2-f432-46e5-a6e6-4df9beea25a1",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "cognitoIdentityId": null,
+      "caller": null,
+      "sourceIp": "103.39.127.43",
+      "principalOrgId": null,
+      "accessKey": null,
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+      "user": null
+    },
+    "domainName": "si1uljs43l.execute-api.ap-south-1.amazonaws.com",
+    "deploymentId": "7gc03q",
+    "apiId": "si1uljs43l"
+  },
+  "body": "{\"url\":\"https://youtu.be/D-YDEyuDxWU?si=ZZLgOi39qVommTgY\"}",
+  "isBase64Encoded": false
+}
+2026-02-28T21:45:49.332000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e START RequestId: fdde7e98-6c36-481c-9692-7e2cf9276ac8 Version: $LATEST
+2026-02-28T21:45:49.343000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:49.343Z	fdde7e98-6c36-481c-9692-7e2cf9276ac8	INFO	Detected YouTube URL. Getting info...
+2026-02-28T21:45:50.721000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:50.721Z	fdde7e98-6c36-481c-9692-7e2cf9276ac8	ERROR	Streaming error: MinigetError: Status code: 410
+    at ClientRequest.<anonymous> (/var/task/node_modules/miniget/dist/index.js:206:27)
+    at Object.onceWrapper (node:events:639:26)
+    at ClientRequest.emit (node:events:524:28)
+    at HTTPParser.parserOnIncomingClient (node:_http_client:702:27)
+    at HTTPParser.parserOnHeadersComplete (node:_http_common:118:17)
+    at TLSSocket.socketOnData (node:_http_client:544:22)
+    at TLSSocket.emit (node:events:524:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5) {
+  statusCode: 410
+}
+2026-02-28T21:45:50.722000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e 2026-02-28T21:45:50.722Z	fdde7e98-6c36-481c-9692-7e2cf9276ac8	ERROR	Error in UrlIngest handler: TypeError: (intermediate value).catch is not a function
+    at updateStage (/var/task/index.js:124:11)
+    at exports.handler (/var/task/index.js:95:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-02-28T21:45:50.724000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e END RequestId: fdde7e98-6c36-481c-9692-7e2cf9276ac8
+2026-02-28T21:45:50.724000+00:00 2026/02/28/[$LATEST]4d42353e92cd454ba632ecbecdebba8e REPORT RequestId: fdde7e98-6c36-481c-9692-7e2cf9276ac8	Duration: 1391.31 ms	Billed Duration: 1392 ms	Memory Size: 1024 MB	Max Memory Used: 127 MB

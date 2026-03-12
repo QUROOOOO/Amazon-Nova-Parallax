@@ -1,0 +1,491 @@
+/* ============================================
+   AUTH PAGE — Nothing OS Design
+   Centered card, dot-matrix header, flat inputs
+   ============================================ */
+
+/* === Full Page Canvas === */
+.auth-page {
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Transparent — particle canvas at z:-1 provides the backdrop */
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle dot-grid background */
+.auth-dot-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--n-outline) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* === Auth Container (Floating Card) === */
+.auth-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+/* === Hero Area === */
+.auth-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center on mobile! */
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-8) var(--space-16);
+  flex: 0.5; /* take up dynamic space */
+}
+
+.auth-hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center all elements on mobile */
+  gap: var(--space-8);
+  width: 100%;
+}
+
+.auth-display {
+  font-family: 'League Gothic', 'Anton', Impact, sans-serif;
+  font-size: clamp(2.5rem, 10vh, 5rem); /* Scale dynamically by height for mobile screens */
+  font-weight: 400;
+  line-height: 0.85;
+  letter-spacing: 0.01em;
+  color: var(--n-on-surface);
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+  word-break: normal;
+}
+
+.auth-subtitle {
+  max-width: 100%;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.auth-hero-accent {
+  margin-top: var(--space-8);
+}
+
+/* === Auth Card Main Forms === */
+.auth-form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; 
+  width: 100%;
+  flex: 1.5; 
+  overflow-y: hidden; /* Prevent scrolling explicitly */
+  padding-top: 12px; /* Generous room for hover scale effect without cropping */
+  padding-bottom: var(--space-12);
+}
+
+.auth-card {
+  width: calc(100% - 32px);
+  margin: auto;
+  max-width: 440px;
+  padding: var(--space-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  /* Glassmorphism — pops against moving particles */
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg, 16px);
+}
+
+.auth-card-profile {
+  max-width: 520px;
+  max-height: 80vh;
+}
+
+/* === Form === */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-16);
+}
+
+.auth-form-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.auth-form-header:has(.auth-link-btn) {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Phone Input / General Inputs === */
+.auth-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: 0;
+  border-bottom: 2px solid var(--n-outline);
+  padding-bottom: 0;
+  transition: border-color 0.2s ease;
+  width: 100%;
+}
+
+.auth-input-row:focus-within {
+  border-bottom-color: var(--n-accent);
+}
+
+.auth-center-input {
+  width: 100%;
+  background: transparent;
+  border: none !important;
+  color: var(--n-on-surface);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  outline: none;
+  padding: var(--space-12) var(--space-36); /* Room for eye btn while perfectly centered */
+}
+
+.auth-center-input::placeholder {
+  color: var(--n-on-surface-muted);
+  opacity: 0.5;
+}
+
+.auth-eye-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--n-on-surface-muted);
+  cursor: pointer;
+  padding: var(--space-8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  z-index: 5;
+}
+
+.auth-eye-btn:hover {
+  color: var(--n-on-surface);
+}
+
+/* === OTP Inputs === */
+.auth-otp-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+.auth-otp-input {
+  flex: 1;
+  aspect-ratio: 1;
+  max-width: 52px;
+  text-align: center;
+  background: var(--n-surface);
+  border: 1px solid var(--n-outline);
+  border-radius: var(--radius-md);
+  color: var(--n-on-surface);
+  font-family: var(--font-dot);
+  font-size: 1.25rem;
+  font-weight: 700;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.auth-otp-input:focus {
+  border-color: var(--n-accent);
+}
+
+/* === Link Button (e.g. "Change") === */
+.auth-link-btn {
+  background: none;
+  border: none;
+  color: var(--n-on-surface-muted);
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: var(--font-body);
+  transition: color 0.2s ease;
+}
+
+.auth-link-btn:hover {
+  color: var(--n-on-surface);
+}
+
+/* === Profile Form === */
+.auth-profile-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  max-height: 45vh;
+  overflow-y: auto;
+  padding-right: var(--space-4);
+}
+
+.auth-profile-scroll::-webkit-scrollbar {
+  width: 2px;
+}
+.auth-profile-scroll::-webkit-scrollbar-thumb {
+  background: var(--n-outline);
+  border-radius: var(--radius-pill);
+}
+
+.auth-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+/* === Role Grid (Nothing Bento) === */
+.auth-role-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-8);
+}
+
+.auth-role-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  padding: var(--space-16) var(--space-12);
+  background: var(--n-surface);
+  border: 1px solid var(--n-outline);
+  border-radius: var(--radius-md);
+  color: var(--n-on-surface-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  font-family: var(--font-body);
+}
+
+.auth-role-card:hover {
+  border-color: var(--n-on-surface-muted);
+  color: var(--n-on-surface);
+}
+
+.auth-role-card.selected {
+  border-color: var(--n-accent);
+  color: var(--n-on-surface);
+}
+
+/* Inverted "Other" card */
+.auth-role-card.inverted {
+  background: var(--n-on-surface);
+  color: var(--n-bg);
+  border-color: transparent;
+}
+
+.auth-role-card.inverted:hover {
+  opacity: 0.9;
+}
+
+.auth-role-card.inverted.selected {
+  background: var(--n-accent);
+  color: #FFFFFF;
+}
+
+.auth-check {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  color: var(--n-accent);
+}
+
+.auth-role-card.inverted .auth-check {
+  color: #FFFFFF;
+}
+
+/* === Platform Chips === */
+.auth-platform-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-8);
+}
+
+.auth-platform-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-8) var(--space-16);
+  background: transparent;
+  border: 1px solid var(--n-outline);
+  border-radius: var(--radius-pill);
+  color: var(--n-on-surface-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.auth-platform-chip:hover {
+  border-color: var(--n-on-surface-muted);
+  color: var(--n-on-surface);
+}
+
+.auth-platform-chip.selected {
+  background: var(--n-on-surface);
+  color: var(--n-bg);
+  border-color: transparent;
+}
+
+/* === Section Tabs === */
+.auth-tabs {
+  display: flex;
+  align-items: center;
+  background: var(--n-bg);
+  border: 1px solid var(--n-outline);
+  border-radius: var(--radius-pill);
+  padding: 4px;
+  margin-bottom: var(--space-8);
+  width: 100%;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  padding: var(--space-8) 0;
+  text-align: center;
+  font-family: var(--font-dot);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  color: var(--n-on-surface-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-tab-btn.active {
+  background: var(--n-on-surface);
+  color: var(--n-bg);
+}
+
+/* === Fade-in Animation === */
+.auth-fade-in {
+  animation: authFadeIn 0.4s ease-out forwards;
+}
+
+@keyframes authFadeIn {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   DESKTOP LAYOUT — 50/50 Split Screen Grand Mode
+   ============================================ */
+@media (min-width: 1024px) {
+  .auth-page {
+    padding: 0;
+  }
+
+  .auth-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    gap: 0;
+  }
+
+  /* Left Side - Billboard */
+  .auth-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    height: 100%;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    /* Semi-transparent glow so particles bleed through beautifully */
+    background: radial-gradient(45vw 45vw at 15% 30%, rgba(215, 25, 33, 0.25), transparent),
+                radial-gradient(50vw 50vw at 85% 70%, rgba(255, 214, 0, 0.15), transparent);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    padding: var(--space-48);
+    min-width: 0;
+  }
+
+  .auth-hero-text {
+    align-items: flex-start; /* Flush left */
+    width: max-content;
+    max-width: 100%;
+  }
+
+  .auth-hero-text .n-logo {
+    margin-left: 6px; /* Align perfectly with the stem of the huge B/C characters */
+  }
+
+  /* Right Side - Form Wrapper */
+  .auth-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    /* Transparent — particles bleed through from behind */
+    background: transparent;
+    padding: var(--space-32);
+    width: 100%;
+    min-width: 0;
+  }
+
+  .auth-display {
+    text-align: left;
+    font-size: clamp(8rem, 15vw, 15rem); /* Extremely massive text size */
+    word-break: break-word;
+    letter-spacing: -0.02em;
+  }
+
+  .auth-subtitle {
+    text-align: left;
+    max-width: 480px;
+    font-size: 1rem;
+  }
+
+  /* Desktop card — keep glassmorphism but slightly wider */
+  .auth-card {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    padding: var(--space-32);
+    max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .auth-card-profile {
+    max-width: 700px;
+  }
+}
