@@ -1,5 +1,6 @@
+
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Scissors, Upload, X, CheckCircle2, ChevronRight, Download, Sparkles, Clock, Zap } from 'lucide-react';
+import { Scissors, Upload, X, CheckCircle2, ChevronRight, Download, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './ParallaxWorkspace.css';
 
@@ -13,9 +14,7 @@ import './ParallaxWorkspace.css';
  */
 
 export default function ParallaxWorkspace() {
-  // Demo gate state
-  const [demoMode, setDemoMode] = useState(false);
-  const [bannerDismissing, setBannerDismissing] = useState(false);
+
 
   // Upload state
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -45,11 +44,6 @@ export default function ParallaxWorkspace() {
     };
   }, [previewUrl, outputBlobUrl]);
 
-  // ── DEMO GATE ──────────────────────────────
-  const handleEnterDemo = () => {
-    setBannerDismissing(true);
-    setTimeout(() => setDemoMode(true), 600);
-  };
 
   // ── FILE HANDLING ──────────────────────────
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -319,94 +313,21 @@ export default function ParallaxWorkspace() {
           <h1 className="lab-title dot-display" style={{ margin: 0 }}>
             <span className="typography-reveal"><span>Parallax Workspace</span></span>
           </h1>
-          {demoMode && (
-            <motion.span
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="lab-demo-badge"
-            >
-              <Sparkles size={14} /> DEMO MODE
-            </motion.span>
-          )}
+
         </div>
         <p className="body-medium text-muted" style={{ margin: 0 }}>
           1-to-many content engine. One video → 10+ native formats.
         </p>
       </div>
 
-      {/* ═══ COMING SOON BANNER ═══ */}
+      {/* ═══ MAIN WORKSPACE INTERFACE ═══ */}
       <AnimatePresence>
-        {!demoMode && (
-          <motion.div
-            className="lab-coming-soon-section"
-            initial={{ opacity: 1 }}
-            animate={bannerDismissing ? { opacity: 0, y: -40, scale: 0.95 } : { opacity: 1 }}
-            exit={{ opacity: 0, y: -40, scale: 0.95 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {/* Pill Banner */}
-            <motion.div
-              className="coming-soon-pill"
-              animate={bannerDismissing ? { scale: 0.7, opacity: 0 } : {}}
-              transition={{ duration: 0.4 }}
-            >
-              <Clock size={18} className="coming-soon-icon" />
-              <span>COMING SOON...</span>
-            </motion.div>
-
-            {/* Explanation */}
-            <motion.div
-              className="coming-soon-explanation"
-              animate={bannerDismissing ? { opacity: 0, y: 20 } : {}}
-              transition={{ duration: 0.3, delay: 0.1 }}
-            >
-              <h2 className="coming-soon-title">Full AI Pipeline Launching Soon</h2>
-              <p className="coming-soon-text">
-                Our AI video engine (Amazon Nova 2.0 + Cloudinary) is paused due to <strong>API quota limits</strong> during beta. 
-                Try the demo below to experience the core trim & crop engine!
-              </p>
-
-              <div className="coming-soon-features">
-                <div className="feature-chip">
-                  <Scissors size={16} />
-                  <span>Smart Trim (First 10s)</span>
-                </div>
-                <div className="feature-chip">
-                  <Zap size={16} />
-                  <span>1:1 Square Crop</span>
-                </div>
-                <div className="feature-chip">
-                  <Download size={16} />
-                  <span>Instant Download</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* CTA Button */}
-            <motion.button
-              className="lab-demo-cta"
-              onClick={handleEnterDemo}
-              whileHover={{ y: -3, boxShadow: '0 12px 40px rgba(215,25,33,0.4)' }}
-              whileTap={{ scale: 0.97 }}
-              animate={bannerDismissing ? { opacity: 0, scale: 0.9 } : {}}
-            >
-              <Sparkles size={20} />
-              Experience Demo
-              <ChevronRight size={18} />
-            </motion.button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ═══ DEMO INTERFACE ═══ */}
-      <AnimatePresence>
-        {demoMode && (
-          <motion.div
-            className="lab-demo-workspace"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          >
+        <motion.div
+          className="lab-demo-workspace"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        >
             {/* Hidden elements for processing */}
             <video
               ref={sourceVideoRef}
@@ -607,7 +528,6 @@ export default function ParallaxWorkspace() {
               </AnimatePresence>
             </div>
           </motion.div>
-        )}
       </AnimatePresence>
     </div>
   );
