@@ -53,7 +53,8 @@ export class BackendStack extends cdk.Stack {
     });
 
     // Ideas & Trends Table (The Spark & Research Vault)
-    const contentTable = new dynamodb.Table(this, 'ContentTable', {
+    const parallaxMediaTable = new dynamodb.Table(this, 'ParallaxMediaTable', {
+      tableName: 'ParallaxMediaTable',
       partitionKey: { name: 'contentId', type: dynamodb.AttributeType.STRING },
       sortKey: { name: 'userId', type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -61,7 +62,7 @@ export class BackendStack extends cdk.Stack {
     });
     
     // Add GSI to fetch all content for a user easily
-    contentTable.addGlobalSecondaryIndex({
+    parallaxMediaTable.addGlobalSecondaryIndex({
       indexName: 'UserContentIndex',
       partitionKey: { name: 'userId', type: dynamodb.AttributeType.STRING },
       sortKey: { name: 'createdAt', type: dynamodb.AttributeType.STRING },
@@ -130,7 +131,7 @@ export class BackendStack extends cdk.Stack {
       memorySize: 128, // Credit Conservation
       environment: {
         USERS_TABLE: usersTable.tableName,
-        CONTENT_TABLE: contentTable.tableName,
+        CONTENT_TABLE: parallaxMediaTable.tableName,
         USER_POOL_ID: userPool.userPoolId,
         REGION: cdk.Stack.of(this).region,
         NOVA_API_KEY: process.env.NOVA_API_KEY || '',
@@ -159,7 +160,7 @@ export class BackendStack extends cdk.Stack {
       ...lambdaProps,
       code: lambda.Code.fromAsset(path.join(__dirname, 'handlers/spark')),
     });
-    contentTable.grantReadWriteData(sparkHandler);
+    parallaxMediaTable.grantReadWriteData(sparkHandler);
 
     // Smart Vault (Trends) Handler
     const trendsHandler = new lambda.Function(this, 'TrendsHandler', {
@@ -376,7 +377,7 @@ export class BackendStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'UsersTableName', { value: usersTable.tableName });
     new cdk.CfnOutput(this, 'ProfilesTableName', { value: profilesTable.tableName });
     new cdk.CfnOutput(this, 'ConnectionsTableName', { value: connectionsTable.tableName });
-    new cdk.CfnOutput(this, 'ContentTableName', { value: contentTable.tableName });
+    new cdk.CfnOutput(this, 'ParallaxMediaTableName', { value: parallaxMediaTable.tableName });
     new cdk.CfnOutput(this, 'JobsTableName', { value: jobsTable.tableName });
     new cdk.CfnOutput(this, 'ImageBucketName', { value: imageBucket.bucketName });
     new cdk.CfnOutput(this, 'AnalyzeFunctionUrl', { value: analyzeUrl.url });
