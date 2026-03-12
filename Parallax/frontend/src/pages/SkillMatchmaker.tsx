@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { get, post } from 'aws-amplify/api';
 import { fetchAuthSession } from 'aws-amplify/auth';
-import { analyzeSynergyWithAmazon Nova } from '../utils/Amazon NovaAnalysis';
+import { analyzeSynergyWithNova } from '../utils/novaAnalysis';
 import './SkillMatchmaker.css';
 
 // TypeScript Interfaces for the API responses
@@ -157,7 +157,7 @@ export default function SkillMatchmaker() {
       const userNotes = json.data || [];
 
       // Analyze Synergy Score via Amazon Nova
-      const synergy = await analyzeSynergyWithAmazon Nova(targetProfile, userNotes);
+      const synergy = await analyzeSynergyWithNova(targetProfile, userNotes);
 
       setSynergyModal(prev => ({ ...prev, loading: false, score: synergy.score, reasoning: synergy.reasoning }));
     } catch (err: any) {
