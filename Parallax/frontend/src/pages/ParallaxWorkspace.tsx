@@ -220,26 +220,49 @@ export default function ParallaxWorkspace() {
       video.currentTime = 0.001;
     });
 
-    // --- Concurrent AI Fetch ---
-    const aiPromise = fetch(import.meta.env.VITE_ANALYZE_FUNCTION_URL || '', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        public_id: uploadedFile?.name || 'demo-video',
-        secure_url: 'https://example.com/demo-video-for-amazon-nova.mp4', // Mock URL for the demo to satisfy lambda
-        cloudName: 'demo-cloud'
-      })
-    })
-    .then(async r => {
-      if (!r.ok) throw new Error("AI API Failed");
-      return r.json();
-    })
-    .catch(err => {
-      console.error(err);
-      return {
-        start_time: "00:00", end_time: "00:10", hook_description: "Failed to connect to Amazon Nova."
-      };
-    });
+    // --- Concurrent AI Fetch via S3 & Bedrock ---
+    const aiPromise = (async () => {
+      try {
+        // 1. Get S3 Presigned URL
+        const uploadRes = await fetch(`${import.meta.env.VITE_API_ENDPOINT}upload`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            filename: uploadedFile?.name || 'demo-video.mp4',
+            contentType: uploadedFile?.type || 'video/mp4',
+            uploadType: 'video'
+          })
+        });
+        if (!uploadRes.ok) throw new Error("Failed to get S3 upload URL");
+        
+        const { uploadUrl, s3Uri } = await uploadRes.json();
+        
+        // 2. Upload video file directly to S3 Bucket
+        const s3Put = await fetch(uploadUrl, {
+          method: 'PUT',
+          headers: { 'Content-Type': uploadedFile?.type || 'video/mp4' },
+          body: uploadedFile
+        });
+        if (!s3Put.ok) throw new Error("S3 video upload failed");
+
+        // 3. Trigger Amazon Nova Bedrock API with S3 URI
+        const r = await fetch(import.meta.env.VITE_ANALYZE_FUNCTION_URL || '', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            public_id: uploadedFile?.name || 'demo-video',
+            s3Uri: s3Uri
+          })
+        });
+        if (!r.ok) throw new Error("Amazon Nova analysis failed");
+        return await r.json();
+      } catch (err) {
+        console.error("AI Pipeline Error:", err);
+        return {
+          start_time: "00:00", end_time: "00:10", hook_description: "Failed to connect to Amazon Nova API. Verify backend logs."
+        };
+      }
+    })();
 
     // --- Infinite Loop Animation ---
     let fakeProgress = 0;

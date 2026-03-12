@@ -133,7 +133,7 @@ export class BackendStack extends cdk.Stack {
         CONTENT_TABLE: contentTable.tableName,
         USER_POOL_ID: userPool.userPoolId,
         REGION: cdk.Stack.of(this).region,
-        Amazon Nova_API_KEY: process.env.Amazon Nova_API_KEY || '',
+        NOVA_API_KEY: process.env.NOVA_API_KEY || '',
       },
     };
 
@@ -169,7 +169,7 @@ export class BackendStack extends cdk.Stack {
       environment: {
         ...lambdaProps.environment,
         YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY || '',
-        Amazon Nova_API_KEY: process.env.Amazon Nova_API_KEY || ''
+        NOVA_API_KEY: process.env.NOVA_API_KEY || ''
       }
     });
 
@@ -325,10 +325,7 @@ export class BackendStack extends cdk.Stack {
 
     // POST /upload -> Get S3 Presigned URL for Image Uploads
     const uploadResource = api.root.addResource('upload');
-    uploadResource.addMethod('POST', new apigateway.LambdaIntegration(uploadHandler), {
-      authorizer,
-      authorizationType: apigateway.AuthorizationType.COGNITO,
-    });
+    uploadResource.addMethod('POST', new apigateway.LambdaIntegration(uploadHandler));
 
     // Parallax Workspace API Routes (Cloudinary Pipeline)
     const repurposeResource = api.root.addResource('repurpose');
