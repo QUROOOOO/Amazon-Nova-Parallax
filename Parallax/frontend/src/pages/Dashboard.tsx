@@ -173,7 +173,7 @@ export default function Dashboard() {
       const token = session.tokens?.idToken?.toString() || '';
       
       const restOp = get({
-        apiName: 'VibeCollabApi',
+        apiName: 'ParallaxApi',
         path: '/spark',
         options: {
           headers: { Authorization: token }
@@ -271,7 +271,7 @@ export default function Dashboard() {
               const token = session.tokens?.idToken?.toString() || '';
               
               await del({
-                apiName: 'VibeCollabApi',
+                apiName: 'ParallaxApi',
                 path: '/spark',
                 options: {
                   headers: { Authorization: token },
@@ -306,7 +306,7 @@ export default function Dashboard() {
     if (navigator.share) {
       navigator.share({
         title: idea.title,
-        text: 'Check out this idea from Vibe Collab AI',
+        text: 'Check out this idea from Parallax AI',
         url: window.location.href,
       }).catch(() => {});
     }
@@ -470,7 +470,7 @@ export default function Dashboard() {
                            const token = session.tokens?.idToken?.toString() || '';
                            const hasContentId = !!currentNote.contentId;
                            const resp = await post({
-                             apiName: 'VibeCollabApi',
+                             apiName: 'ParallaxApi',
                              path: '/spark',
                              options: {
                                headers: { Authorization: token },

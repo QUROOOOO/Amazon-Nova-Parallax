@@ -12,7 +12,7 @@ const awsConfig = {
     },
     API: {
         REST: {
-            VibeCollabApi: {
+            ParallaxApi: {
                 endpoint: import.meta.env.VITE_API_ENDPOINT?.replace(/\/$/, '') || '', // Safe strip trailing slash
                 region: import.meta.env.VITE_REGION || 'us-east-1'
             }

@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
+const Amazon Nova_KEY = import.meta.env.VITE_Amazon Nova_API_KEY || '';
 
 export interface ClipResult {
   title: string;
@@ -101,15 +101,15 @@ export async function fetchYouTubeTranscript(url: string): Promise<string> {
 }
 
 /**
- * Send transcript to Gemini for viral clip analysis.
+ * Send transcript to Amazon Nova for viral clip analysis.
  */
-export async function analyzeWithGemini(transcript: string): Promise<ClipResult> {
-  if (!GEMINI_KEY) {
-    throw new Error('Gemini API key not configured. Add VITE_GEMINI_API_KEY to your .env file.');
+export async function analyzeWithAmazon Nova(transcript: string): Promise<ClipResult> {
+  if (!Amazon Nova_KEY) {
+    throw new Error('Amazon Nova API key not configured. Add VITE_Amazon Nova_API_KEY to your .env file.');
   }
 
-  const genAI = new GoogleGenerativeAI(GEMINI_KEY);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const genAI = new GoogleGenerativeAI(Amazon Nova_KEY);
+  const model = genAI.getGenerativeModel({ model: 'Amazon Nova-1.5-flash' });
 
   const prompt = `You are a viral content analyst for Indian social media creators.
 Analyze the following YouTube video transcript and identify THE SINGLE BEST viral clip segment.
@@ -142,13 +142,13 @@ Respond ONLY with valid JSON, no markdown, no code blocks:
 /**
  * Calculate Synergy Score between a user's ideas and a potential collaborator's profile.
  */
-export async function analyzeSynergyWithGemini(targetProfile: any, userNotes: any[]): Promise<SynergyResult> {
-  if (!GEMINI_KEY) {
-    throw new Error('Gemini API key not configured. Add VITE_GEMINI_API_KEY to your .env file.');
+export async function analyzeSynergyWithAmazon Nova(targetProfile: any, userNotes: any[]): Promise<SynergyResult> {
+  if (!Amazon Nova_KEY) {
+    throw new Error('Amazon Nova API key not configured. Add VITE_Amazon Nova_API_KEY to your .env file.');
   }
 
-  const genAI = new GoogleGenerativeAI(GEMINI_KEY);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const genAI = new GoogleGenerativeAI(Amazon Nova_KEY);
+  const model = genAI.getGenerativeModel({ model: 'Amazon Nova-1.5-flash' });
 
   // Extract raw text from HTML notes
   const notesText = userNotes

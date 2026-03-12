@@ -97,7 +97,7 @@ export default function ResearchVault() {
       const token = session.tokens?.idToken?.toString() || '';
 
       const restOp = get({
-        apiName: 'VibeCollabApi',
+        apiName: 'ParallaxApi',
         path: '/trends',
         options: {
           headers: { Authorization: token },
@@ -351,7 +351,7 @@ export default function ResearchVault() {
                         <strong style={{ color: 'var(--n-accent-yellow)' }}>⚡ VVRA Baseline:</strong> We compute <code style={{ background: 'rgba(255,255,255,0.1)', padding: '2px 4px', borderRadius: '4px', fontSize: '0.75rem' }}>(views / hours) × ((likes + comments×1.5) / views)</code>. This combines velocity with engagement density — rewarding videos that are both fast-growing AND deeply engaging.
                       </p>
                       <p>
-                        <strong style={{ color: 'var(--n-accent-yellow)' }}>🧠 Gemini γ Multiplier:</strong> We batch the top 50 results through Gemini 2.0 Flash, which assigns a reproducibility score (0.5× to 2.0×). Solo-creator-friendly formats (commentary, tutorials) get 2.0×, while studio productions get 0.5×.
+                        <strong style={{ color: 'var(--n-accent-yellow)' }}>🧠 Amazon Nova γ Multiplier:</strong> We batch the top 50 results through Amazon Nova, which assigns a reproducibility score (0.5× to 2.0×). Solo-creator-friendly formats (commentary, tutorials) get 2.0×, while studio productions get 0.5×.
                       </p>
                       <p>
                         <strong style={{ color: '#ff6b6b' }}>🎯 Final VVRA = Baseline × γ</strong> — The higher the score, the more viral AND reproducible the trend is for YOU.

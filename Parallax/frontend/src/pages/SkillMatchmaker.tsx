@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { get, post } from 'aws-amplify/api';
 import { fetchAuthSession } from 'aws-amplify/auth';
-import { analyzeSynergyWithGemini } from '../utils/geminiAnalysis';
+import { analyzeSynergyWithAmazon Nova } from '../utils/Amazon NovaAnalysis';
 import './SkillMatchmaker.css';
 
 // TypeScript Interfaces for the API responses
@@ -93,7 +93,7 @@ export default function SkillMatchmaker() {
       const query = industry === 'All' ? '' : `?industry=${encodeURIComponent(industry)}`;
       
       const response = await get({
-        apiName: 'VibeCollabApi',
+        apiName: 'ParallaxApi',
         path: `/profiles${query}`,
         options: { headers: { Authorization: token } }
       }).response;
@@ -119,7 +119,7 @@ export default function SkillMatchmaker() {
       const token = session.tokens?.idToken?.toString() || '';
 
       const response = await post({
-        apiName: 'VibeCollabApi',
+        apiName: 'ParallaxApi',
         path: '/sync',
         options: {
           headers: { Authorization: token },
@@ -146,9 +146,9 @@ export default function SkillMatchmaker() {
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString() || '';
       
-      // Fetch User's Spark Notes to give Gemini context about their ideas
+      // Fetch User's Spark Notes to give Amazon Nova context about their ideas
       const restOp = get({
-        apiName: 'VibeCollabApi',
+        apiName: 'ParallaxApi',
         path: '/spark',
         options: { headers: { Authorization: token } }
       });
@@ -156,8 +156,8 @@ export default function SkillMatchmaker() {
       const json = await response.body.json() as any;
       const userNotes = json.data || [];
 
-      // Analyze Synergy Score via Gemini 2.0 Flash
-      const synergy = await analyzeSynergyWithGemini(targetProfile, userNotes);
+      // Analyze Synergy Score via Amazon Nova
+      const synergy = await analyzeSynergyWithAmazon Nova(targetProfile, userNotes);
 
       setSynergyModal(prev => ({ ...prev, loading: false, score: synergy.score, reasoning: synergy.reasoning }));
     } catch (err: any) {
@@ -165,7 +165,7 @@ export default function SkillMatchmaker() {
       setSynergyModal(prev => ({ 
         ...prev, 
         loading: false, 
-        error: err.message || 'Gemini analysis failed. Ensure API key is set.' 
+        error: err.message || 'Amazon Nova analysis failed. Ensure API key is set.' 
       }));
     }
   };
@@ -408,7 +408,7 @@ export default function SkillMatchmaker() {
               {synergyModal.loading ? (
                 <div className="flex flex-col items-center justify-center py-12">
                   <Terminal className="animate-pulse mb-4" size={40} color="#D71921" />
-                  <p className="text-gray-500 font-mono tracking-wider">GEMINI 2.0 FLASH ANALYZING SPARKS...</p>
+                  <p className="text-gray-500 font-mono tracking-wider">Amazon Nova ANALYZING SPARKS...</p>
                 </div>
               ) : synergyModal.error ? (
                 <div className="p-4 bg-red-50 text-red-600 rounded-xl">

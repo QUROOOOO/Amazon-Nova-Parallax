@@ -1,6 +1,6 @@
-# Vibe Collab AI - Serverless Backend
+# Parallax AI - Serverless Backend
 
-This document describes the AWS Serverless architecture driving the Vibe Collab AI platform.
+This document describes the AWS Serverless architecture driving the Parallax AI platform.
 
 ## Architecture & Infrastructure
 

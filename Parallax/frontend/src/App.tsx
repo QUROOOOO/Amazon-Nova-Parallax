@@ -4,7 +4,7 @@ import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
 import ResearchVault from './pages/ResearchVault';
 import SkillMatchmaker from './pages/SkillMatchmaker';
-import RepurposeLab from './pages/RepurposeLab';
+import ParallaxWorkspace from './pages/ParallaxWorkspace';
 import Monetization from './pages/Monetization';
 import Profile from './pages/Profile';
 import Navigation from './components/Navigation';
@@ -40,7 +40,7 @@ function AppRoutes() {
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/vault" element={<ProtectedRoute><ResearchVault /></ProtectedRoute>} />
               <Route path="/matchmaker" element={<ProtectedRoute><SkillMatchmaker /></ProtectedRoute>} />
-              <Route path="/repurpose" element={<ProtectedRoute><RepurposeLab /></ProtectedRoute>} />
+              <Route path="/repurpose" element={<ProtectedRoute><ParallaxWorkspace /></ProtectedRoute>} />
               <Route path="/monetization" element={<ProtectedRoute><Monetization /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             </Routes>

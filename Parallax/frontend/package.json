@@ -1,7 +1,8 @@
 {
-  "name": "frontend",
+  "name": "parallax",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "AI-driven video cropping engine built for the Amazon Nova AI Hackathon.",
   "type": "module",
   "scripts": {
     "dev": "vite",

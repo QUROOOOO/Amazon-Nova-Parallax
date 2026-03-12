@@ -1,8 +1,8 @@
-# Design Document: Vibe Collab AI
+# Design Document: Parallax AI
 
 ## Overview
 
-Vibe Collab AI is an AI-powered collaboration platform built to support India's Tier-2 and Tier-3 creators. It serves as an infrastructure layer that addresses operational burnout, monetization challenges, and workflow fragmentation. The platform integrates a creative research vault, a skill matchmaker, a content repurposer, and a monetization engine, all underpinned by a scalable AWS serverless architecture.
+Parallax AI is an AI-powered collaboration platform built to support India's Tier-2 and Tier-3 creators. It serves as an infrastructure layer that addresses operational burnout, monetization challenges, and workflow fragmentation. The platform integrates a creative research vault, a skill matchmaker, a content repurposer, and a monetization engine, all underpinned by a scalable AWS serverless architecture.
 
 ## Architecture
 

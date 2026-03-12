@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Scissors, Upload, X, CheckCircle2, ChevronRight, Download, Sparkles, Clock, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import './RepurposeLab.css';
+import './ParallaxWorkspace.css';
 
 /**
- * Repurpose Lab — Demo Mode
+ * Parallax Workspace — Demo Mode
  * 
  * Shows a "Coming Soon" banner explaining API quota limits.
  * An "Experience Demo" button reveals the demo interface.
@@ -12,7 +12,7 @@ import './RepurposeLab.css';
  * → previewed inline → downloadable as MP4.
  */
 
-export default function RepurposeLab() {
+export default function ParallaxWorkspace() {
   // Demo gate state
   const [demoMode, setDemoMode] = useState(false);
   const [bannerDismissing, setBannerDismissing] = useState(false);
@@ -30,6 +30,7 @@ export default function RepurposeLab() {
   // Output state
   const [isComplete, setIsComplete] = useState(false);
   const [outputBlobUrl, setOutputBlobUrl] = useState<string | null>(null);
+  const [aiHook, setAiHook] = useState<{start_time: string, end_time: string, hook_description: string} | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const sourceVideoRef = useRef<HTMLVideoElement>(null);
@@ -75,6 +76,7 @@ export default function RepurposeLab() {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
     setIsComplete(false);
+    setAiHook(null);
     if (outputBlobUrl) URL.revokeObjectURL(outputBlobUrl);
     setOutputBlobUrl(null);
     setIsProcessing(false);
@@ -175,14 +177,11 @@ export default function RepurposeLab() {
 
     setProcessingStage('Trimming & cropping...');
 
-    return new Promise<void>((resolve) => {
+    const videoPromise = new Promise<void>((resolve) => {
       recorder.onstop = () => {
         const blob = new Blob(chunks, { type: mimeType });
         const url = URL.createObjectURL(blob);
         setOutputBlobUrl(url);
-        setIsProcessing(false);
-        setIsComplete(true);
-        setProcessingProgress(100);
         resolve();
       };
 
@@ -208,16 +207,6 @@ export default function RepurposeLab() {
         // @ts-ignore — requestFrame is a valid method on CanvasCaptureMediaStreamTrack
         if (videoTrack && videoTrack.requestFrame) videoTrack.requestFrame();
 
-        // Update progress
-        const pct = Math.min((video.currentTime / actualDuration) * 100, 100);
-        setProcessingProgress(Math.round(pct));
-        setProcessingStage(
-          pct < 30 ? 'Extracting frames...' :
-          pct < 60 ? 'Applying center square crop...' :
-          pct < 90 ? 'Encoding output...' :
-          'Finalizing...'
-        );
-
         requestAnimationFrame(drawFrame);
       };
 
@@ -230,13 +219,59 @@ export default function RepurposeLab() {
       // Seek to start
       video.currentTime = 0.001;
     });
+
+    // --- Concurrent AI Fetch ---
+    const aiPromise = fetch(import.meta.env.VITE_ANALYZE_FUNCTION_URL || '', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        public_id: uploadedFile?.name || 'demo-video',
+        secure_url: 'https://example.com/demo-video-for-amazon-nova.mp4', // Mock URL for the demo to satisfy lambda
+        cloudName: 'demo-cloud'
+      })
+    })
+    .then(async r => {
+      if (!r.ok) throw new Error("AI API Failed");
+      return r.json();
+    })
+    .catch(err => {
+      console.error(err);
+      return {
+        start_time: "00:00", end_time: "00:10", hook_description: "Failed to connect to Amazon Nova."
+      };
+    });
+
+    // --- Infinite Loop Animation ---
+    let fakeProgress = 0;
+    const progressInterval = setInterval(() => {
+      fakeProgress += Math.random() * 5;
+      if (fakeProgress > 95) fakeProgress = 15; // Loop back to 15% infinitely
+      setProcessingProgress(Math.floor(fakeProgress));
+      setProcessingStage(
+        fakeProgress < 35 ? 'Analyzing video with Amazon Nova...' :
+        fakeProgress < 70 ? 'Extracting the best viral hook...' :
+        'Waiting for AI response...'
+      );
+    }, 300);
+
+    // Wait for both video crop and AI fetch to finish
+    const aiResult = await aiPromise;
+    await videoPromise;
+
+    clearInterval(progressInterval);
+    setProcessingProgress(100);
+    setProcessingStage('Finalizing...');
+    
+    setAiHook(aiResult);
+    setIsProcessing(false);
+    setIsComplete(true);
   }, [uploadedFile]);
 
   const handleDownload = () => {
     if (!outputBlobUrl) return;
     const a = document.createElement('a');
     a.href = outputBlobUrl;
-    a.download = `vibe-collab-clip-${Date.now()}.webm`;
+    a.download = `parallax-clip-${Date.now()}.webm`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -253,7 +288,7 @@ export default function RepurposeLab() {
       <div className="lab-sticky-header">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h1 className="lab-title dot-display" style={{ margin: 0 }}>
-            <span className="typography-reveal"><span>Repurpose Lab</span></span>
+            <span className="typography-reveal"><span>Parallax Workspace</span></span>
           </h1>
           {demoMode && (
             <motion.span
@@ -298,7 +333,7 @@ export default function RepurposeLab() {
             >
               <h2 className="coming-soon-title">Full AI Pipeline Launching Soon</h2>
               <p className="coming-soon-text">
-                Our AI video engine (Gemini 2.0 + Cloudinary) is paused due to <strong>API quota limits</strong> during beta. 
+                Our AI video engine (Amazon Nova 2.0 + Cloudinary) is paused due to <strong>API quota limits</strong> during beta. 
                 Try the demo below to experience the core trim & crop engine!
               </p>
 
@@ -499,22 +534,23 @@ export default function RepurposeLab() {
                       <div className="lab-output-details">
                         <h4 className="title-large" style={{ fontSize: '1.5rem', marginBottom: '8px' }}>AI-Trimmed Square Clip</h4>
                         <span className="lab-tag" style={{ fontSize: '0.85rem', padding: '6px 14px', background: 'var(--n-accent)', color: '#fff', border: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '16px' }}>
-                          <Scissors size={14} /> 0s → 10s • 1:1 Square
+                          <Scissors size={14} /> {aiHook ? `${aiHook.start_time} → ${aiHook.end_time}` : '0s → 10s'} • 1:1 Square
                         </span>
 
                         <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '16px', padding: '20px', border: '1px solid var(--n-outline)', marginBottom: '20px' }}>
+                          <h5 style={{ margin: '0 0 8px 0', fontSize: '1rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <Sparkles size={16} color="var(--n-accent)"/> Amazon Nova AI Hook Extraction
+                          </h5>
                           <p className="body-medium text-muted" style={{ margin: 0, lineHeight: 1.7 }}>
-                            The first 10 seconds of your video have been extracted and intelligently cropped to a 
-                            perfect 1:1 square format — optimized for Instagram Reels, YouTube Shorts, and TikTok. 
-                            The center-crop algorithm ensures the most important visual content is preserved.
+                            {aiHook ? aiHook.hook_description : 'The first 10 seconds of your video have been extracted and intelligently cropped to a perfect 1:1 square format — optimized for Instagram Reels, YouTube Shorts, and TikTok.'}
                           </p>
                         </div>
 
                         <div className="lab-output-tags" style={{ marginBottom: '20px', gap: '8px', display: 'flex', flexWrap: 'wrap' }}>
-                          <span className="lab-tag">#Shorts</span>
-                          <span className="lab-tag">#Reels</span>
+                          <span className="lab-tag">#AmazonNova</span>
+                          <span className="lab-tag">#Hackathon</span>
                           <span className="lab-tag">#SquareCrop</span>
-                          <span className="lab-tag">#VibeCollab</span>
+                          <span className="lab-tag">#Parallax</span>
                         </div>
 
                         <button

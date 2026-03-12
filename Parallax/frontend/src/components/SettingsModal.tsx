@@ -51,7 +51,7 @@ export default function SettingsModal({ isOpen, onClose, userEmail, userName }: 
       const token = session.tokens?.idToken?.toString() || '';
 
       const restOp = get({
-        apiName: 'VibeCollabApi',
+        apiName: 'ParallaxApi',
         path: '/users',
         options: {
           headers: {
@@ -102,7 +102,7 @@ export default function SettingsModal({ isOpen, onClose, userEmail, userName }: 
       const token = session.tokens?.idToken?.toString() || '';
 
       await put({
-        apiName: 'VibeCollabApi',
+        apiName: 'ParallaxApi',
         path: '/users',
         options: {
           headers: { Authorization: token },
@@ -131,7 +131,7 @@ export default function SettingsModal({ isOpen, onClose, userEmail, userName }: 
       const token = session.tokens?.idToken?.toString() || '';
 
       await put({
-        apiName: 'VibeCollabApi',
+        apiName: 'ParallaxApi',
         path: '/users',
         options: {
           headers: { Authorization: token },
@@ -405,7 +405,7 @@ export default function SettingsModal({ isOpen, onClose, userEmail, userName }: 
                     <div className="settings-action-row">
                       <div>
                         <h4 className="title-medium">YouTube Data API</h4>
-                        <p className="body-small text-muted">Sync your latest videos for the Repurpose Lab.</p>
+                        <p className="body-small text-muted">Sync your latest videos for the Parallax Workspace.</p>
                       </div>
                       <span className="body-small text-muted" style={{ padding: '8px 16px', border: '1px dashed var(--n-outline)', borderRadius: 'var(--radius-pill)' }}>Coming Soon</span>
                     </div>

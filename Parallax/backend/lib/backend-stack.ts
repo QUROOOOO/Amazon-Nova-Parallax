@@ -18,8 +18,8 @@ export class BackendStack extends cdk.Stack {
     // 1. AUTHENTICATION: Cognito User Pool
     // ==========================================
     // Set up Email-based OTP login
-    const userPool = new cognito.UserPool(this, 'VibeCollabEmailUserPool', {
-      userPoolName: 'VibeCollabEmailUsers',
+    const userPool = new cognito.UserPool(this, 'ParallaxEmailUserPool', {
+      userPoolName: 'ParallaxEmailUsers',
       selfSignUpEnabled: true,
       signInAliases: { email: true }, // Changed to email
       autoVerify: { email: true }, // Verify via email
@@ -33,7 +33,7 @@ export class BackendStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY, // For hackathon purposes
     });
 
-    const userPoolClient = new cognito.UserPoolClient(this, 'VibeCollabAppClient', {
+    const userPoolClient = new cognito.UserPoolClient(this, 'ParallaxAppClient', {
       userPool,
       generateSecret: false,
       authFlows: {
@@ -67,7 +67,7 @@ export class BackendStack extends cdk.Stack {
       sortKey: { name: 'createdAt', type: dynamodb.AttributeType.STRING },
     });
 
-    // Repurpose Lab Jobs Table
+    // Parallax Workspace Jobs Table
     const jobsTable = new dynamodb.Table(this, 'JobsTable', {
       partitionKey: { name: 'jobId', type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -101,7 +101,7 @@ export class BackendStack extends cdk.Stack {
     });
 
     // S3 Bucket for Static Images (Rich Notes)
-    const imageBucket = new s3.Bucket(this, 'VibeCollabImageBucket', {
+    const imageBucket = new s3.Bucket(this, 'ParallaxImageBucket', {
       publicReadAccess: true,
       blockPublicAccess: new s3.BlockPublicAccess({
         blockPublicAcls: false,
@@ -133,7 +133,7 @@ export class BackendStack extends cdk.Stack {
         CONTENT_TABLE: contentTable.tableName,
         USER_POOL_ID: userPool.userPoolId,
         REGION: cdk.Stack.of(this).region,
-        GEMINI_API_KEY: process.env.GEMINI_API_KEY || '',
+        Amazon Nova_API_KEY: process.env.Amazon Nova_API_KEY || '',
       },
     };
 
@@ -143,7 +143,7 @@ export class BackendStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, 'handlers/post-confirmation')),
       environment: {
         ...lambdaProps.environment,
-        SENDER_EMAIL: process.env.SENDER_EMAIL || 'welcome@vibe-collab.ai',
+        SENDER_EMAIL: process.env.SENDER_EMAIL || 'welcome@parallax.ai',
       }
     });
 
@@ -169,7 +169,7 @@ export class BackendStack extends cdk.Stack {
       environment: {
         ...lambdaProps.environment,
         YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY || '',
-        GEMINI_API_KEY: process.env.GEMINI_API_KEY || ''
+        Amazon Nova_API_KEY: process.env.Amazon Nova_API_KEY || ''
       }
     });
 
@@ -194,7 +194,7 @@ export class BackendStack extends cdk.Stack {
       }
     });
 
-    // Cloudinary Video Analysis Handler (Gemini 2.0 Flash)
+    // Cloudinary Video Analysis Handler (Amazon Nova)
     const cloudinaryAnalyzeHandler = new lambda.Function(this, 'CloudinaryAnalyzeHandler', {
       ...lambdaProps,
       code: lambda.Code.fromAsset(path.join(__dirname, 'handlers/cloudinary-analyze')),
@@ -202,12 +202,16 @@ export class BackendStack extends cdk.Stack {
       memorySize: 256,
       environment: {
         ...lambdaProps.environment,
-        GEMINI_API_KEY: process.env.GEMINI_API_KEY || '',
         CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME || '',
         CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
         CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
       }
     });
+
+    cloudinaryAnalyzeHandler.addToRolePolicy(new iam.PolicyStatement({
+      actions: ['bedrock:InvokeModel'],
+      resources: ['*'],
+    }));
 
     // Direct Lambda Function URL — bypasses API Gateway 29s hard timeout
     const analyzeUrl = cloudinaryAnalyzeHandler.addFunctionUrl({
@@ -273,8 +277,8 @@ export class BackendStack extends cdk.Stack {
     // ==========================================
     // 4. ROUTING: API Gateway
     // ==========================================
-    const api = new apigateway.RestApi(this, 'VibeCollabApi', {
-      restApiName: 'VibeCollab Service',
+    const api = new apigateway.RestApi(this, 'ParallaxApi', {
+      restApiName: 'Parallax Service',
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS,
@@ -286,7 +290,7 @@ export class BackendStack extends cdk.Stack {
     });
 
     // Create the Cognito Authorizer
-    const authorizer = new apigateway.CognitoUserPoolsAuthorizer(this, 'VibeCollabAuthorizer', {
+    const authorizer = new apigateway.CognitoUserPoolsAuthorizer(this, 'ParallaxAuthorizer', {
       cognitoUserPools: [userPool],
     });
 
@@ -326,7 +330,7 @@ export class BackendStack extends cdk.Stack {
       authorizationType: apigateway.AuthorizationType.COGNITO,
     });
 
-    // Repurpose Lab API Routes (Cloudinary Pipeline)
+    // Parallax Workspace API Routes (Cloudinary Pipeline)
     const repurposeResource = api.root.addResource('repurpose');
     const repurposeCloudinaryUpload = repurposeResource.addResource('cloudinary-upload');
     repurposeCloudinaryUpload.addMethod('POST', new apigateway.LambdaIntegration(cloudinaryUploadHandler), {

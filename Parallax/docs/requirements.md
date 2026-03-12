@@ -1,8 +1,8 @@
-# Requirements Document: Vibe Collab AI
+# Requirements Document: Parallax AI
 
 ## Introduction
 
-Vibe Collab AI is an AI-powered collaboration platform designed specifically for India’s Tier-2 and Tier-3 creators, regional language influencers, student creators, and content teams. It aims to solve operational burnout, poor monetization, and fragmented workflows by providing a scalable, cost-efficient infrastructure layer. The platform addresses the needs of over 2.5 million serious creators in India, helping them overcome unstable income and ecosystem exit risks.
+Parallax AI is an AI-powered collaboration platform designed specifically for India’s Tier-2 and Tier-3 creators, regional language influencers, student creators, and content teams. It aims to solve operational burnout, poor monetization, and fragmented workflows by providing a scalable, cost-efficient infrastructure layer. The platform addresses the needs of over 2.5 million serious creators in India, helping them overcome unstable income and ecosystem exit risks.
 
 ## Glossary
 

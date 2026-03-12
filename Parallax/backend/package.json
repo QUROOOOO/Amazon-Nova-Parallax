@@ -21,6 +21,7 @@
     "typescript": "~5.9.3"
   },
   "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1007.0",
     "@aws-sdk/lib-storage": "^3.1000.0",
     "aws-cdk-lib": "^2.240.0",
     "cloudinary": "^2.9.0",
