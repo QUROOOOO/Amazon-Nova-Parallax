@@ -16,23 +16,7 @@ Parallax helps creators instantly identify the most engaging "hook" in their vid
 - **Backend:** AWS CDK, AWS Lambda, Node.js
 - **AI Engine:** Amazon Nova (Bedrock)
 
-## Setup & Deployment
 
-### 1. Backend (AWS CDK)
-Ensure you have the AWS CLI configured with appropriate credentials.
-```bash
-cd backend
-npm install
-npx cdk bootstrap
-npx cdk deploy
-```
-
-### 2. Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
 
 ## Hackathon Goal
 This project was born today completely and strictly for the **Amazon Nova AI Hackathon** to demonstrate how accessible and powerful Amazon's new foundational models are when integrated with standard web technologies.
