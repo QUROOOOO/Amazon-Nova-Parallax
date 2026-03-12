@@ -19,6 +19,7 @@ export default function ParallaxWorkspace() {
 
   // Upload state
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const [isDragActive, setIsDragActive] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -64,11 +65,27 @@ export default function ParallaxWorkspace() {
   };
 
   const acceptFile = (file: File) => {
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
-    setUploadedFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
-    setIsComplete(false);
-    setOutputBlobUrl(null);
+    setUploadError(null);
+    if (file.size > 50 * 1024 * 1024) {
+      setUploadError("Hackathon Limit: Please upload a video under 50MB and 3 minutes.");
+      return;
+    }
+
+    const videoNode = document.createElement('video');
+    videoNode.preload = 'metadata';
+    videoNode.onloadedmetadata = () => {
+      window.URL.revokeObjectURL(videoNode.src);
+      if (videoNode.duration > 180) {
+        setUploadError("Hackathon Limit: Please upload a video under 50MB and 3 minutes.");
+        return;
+      }
+      if (previewUrl) window.URL.revokeObjectURL(previewUrl);
+      setUploadedFile(file);
+      setPreviewUrl(window.URL.createObjectURL(file));
+      setIsComplete(false);
+      setOutputBlobUrl(null);
+    };
+    videoNode.src = window.URL.createObjectURL(file);
   };
 
   const removeFile = () => {
@@ -264,24 +281,13 @@ export default function ParallaxWorkspace() {
       }
     })();
 
-    // --- Infinite Loop Animation ---
-    let fakeProgress = 0;
-    const progressInterval = setInterval(() => {
-      fakeProgress += Math.random() * 5;
-      if (fakeProgress > 95) fakeProgress = 15; // Loop back to 15% infinitely
-      setProcessingProgress(Math.floor(fakeProgress));
-      setProcessingStage(
-        fakeProgress < 35 ? 'Analyzing video with Amazon Nova...' :
-        fakeProgress < 70 ? 'Extracting the best viral hook...' :
-        'Waiting for AI response...'
-      );
-    }, 300);
+    // --- Await Real Backend Response ---
+    setProcessingStage('Analyzing video with Amazon Nova...');
+    setProcessingProgress(50); // Set to 50 to indicate ongoing processing
 
     // Wait for both video crop and AI fetch to finish
     const aiResult = await aiPromise;
     await videoPromise;
-
-    clearInterval(progressInterval);
     setProcessingProgress(100);
     setProcessingStage('Finalizing...');
     
@@ -435,7 +441,12 @@ export default function ParallaxWorkspace() {
                       <Upload size={48} className="text-primary" />
                       <h3 className="title-large" style={{ margin: '16px 0 4px' }}>Upload your raw video</h3>
                       <p className="body-medium text-muted">Drag & drop or click to browse</p>
-                      <p className="body-small text-muted" style={{ marginTop: '4px' }}>MP4, MOV, WebM • Any length (first 10s will be extracted)</p>
+                      <p className="body-small text-muted" style={{ marginTop: '4px' }}>MP4, MOV, WebM • Limit: 50MB, 3 mins</p>
+                      {uploadError && (
+                        <p style={{ color: '#ff4444', marginTop: '12px', fontWeight: 600 }}>
+                          {uploadError}
+                        </p>
+                      )}
                     </div>
                   </motion.div>
                 )}
