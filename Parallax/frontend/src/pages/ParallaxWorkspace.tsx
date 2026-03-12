@@ -1,6 +1,6 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Scissors, Upload, X, CheckCircle2, ChevronRight, Download, Sparkles } from 'lucide-react';
+import { Scissors, X, CheckCircle2, ChevronRight, Download, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './ParallaxWorkspace.css';
 
@@ -326,7 +326,7 @@ export default function ParallaxWorkspace() {
           className="lab-demo-workspace"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ type: "spring", stiffness: 100, damping: 15, mass: 1, delay: 0.2 }}
         >
             {/* Hidden elements for processing */}
             <video
@@ -348,7 +348,7 @@ export default function ParallaxWorkspace() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.4 }}
+                    transition={{ type: "spring", stiffness: 100, damping: 15, mass: 1 }}
                     className="lab-demo-upload-area"
                   >
                     <div
@@ -359,8 +359,12 @@ export default function ParallaxWorkspace() {
                       onDragLeave={() => setIsDragActive(false)}
                     >
                       <input ref={fileInputRef} type="file" accept="video/*" hidden onChange={handleFileSelect} />
-                      <Upload size={48} className="text-primary" />
-                      <h3 className="title-large" style={{ margin: '16px 0 4px' }}>Upload your raw video</h3>
+                      <img 
+                        src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" 
+                        alt="High Human Connection Context" 
+                        style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--n-accent)', marginBottom: '16px' }}
+                      />
+                      <h3 className="title-large" style={{ margin: '0 0 4px' }}>Upload your raw video</h3>
                       <p className="body-medium text-muted">Drag & drop or click to browse</p>
                       <p className="body-small text-muted" style={{ marginTop: '4px' }}>MP4, MOV, WebM • Limit: 50MB, 3 mins</p>
                       {uploadError && (
@@ -379,7 +383,7 @@ export default function ParallaxWorkspace() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.4 }}
+                    transition={{ type: "spring", stiffness: 100, damping: 15, mass: 1 }}
                     className="lab-demo-preview-area"
                   >
                     <div className="lab-preview-card">
@@ -408,7 +412,7 @@ export default function ParallaxWorkspace() {
                       className="lab-generate-btn"
                       onClick={processVideo}
                       whileHover={{ y: -2, boxShadow: '4px 4px 0px 0px #FFFFFF' }}
-                      whileTap={{ scale: 0.97 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <Scissors size={22} />
                       <span>TRIM & CROP TO SQUARE</span>
@@ -423,7 +427,7 @@ export default function ParallaxWorkspace() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.4 }}
+                    transition={{ type: "spring", stiffness: 100, damping: 15, mass: 1 }}
                     className="lab-demo-processing"
                   >
                     <motion.div
@@ -457,7 +461,7 @@ export default function ParallaxWorkspace() {
                     key="output"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ type: "spring", stiffness: 100, damping: 15, mass: 1 }}
                     className="lab-demo-output"
                   >
                     <div className="lab-success-badge" style={{ justifyContent: 'center', marginBottom: '24px' }}>
@@ -479,8 +483,8 @@ export default function ParallaxWorkspace() {
                             aspectRatio: '1 / 1',
                             objectFit: 'cover',
                             borderRadius: '20px',
-                            border: '2px solid rgba(215, 25, 33, 0.3)',
-                            boxShadow: '0 12px 40px rgba(215, 25, 33, 0.2), 0 4px 16px rgba(0,0,0,0.3)',
+                            border: '2px solid rgba(255, 111, 97, 0.3)',
+                            boxShadow: '0 12px 40px rgba(255, 111, 97, 0.2), 0 4px 16px rgba(0,0,0,0.3)',
                             background: '#000',
                           }}
                         />

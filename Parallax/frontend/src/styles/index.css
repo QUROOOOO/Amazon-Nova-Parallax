@@ -4,18 +4,18 @@
    ============================================ */
 
 /* --- Fonts Import --- */
-@import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Anton&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Gothic&family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
 
 :root {
-  /* === NOTHING OS: DARK MODE (Default) === */
-  --n-bg: #000000;
-  --n-surface: #1B1B1D;
-  --n-surface-elevated: #252527;
+  /* === PARALLAX: DARK MODE (Psychology-Driven) === */
+  --n-bg: #0A0A0A;
+  --n-surface: #171717;
+  --n-surface-elevated: #262626;
   --n-on-surface: #FFFFFF;
-  --n-on-surface-muted: #888888;
+  --n-on-surface-muted: #A1A1AA;
   --n-outline: #333333;
-  --n-accent: #D71921;
-  --n-accent-dim: rgba(215, 25, 33, 0.15);
+  --n-accent: #FF6F61;
+  --n-accent-dim: rgba(255, 111, 97, 0.15);
   --n-accent-yellow: #FFD600;
   --n-accent-yellow-dim: rgba(255, 214, 0, 0.15);
 
@@ -35,10 +35,10 @@
   --md-sys-color-on-error: #FFFFFF;
 
   /* Typography */
-  --font-dot: 'Space Mono', monospace;
+  --font-dot: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-family-display: var(--font-dot);
-  --font-family-heading: var(--font-body);
+  --font-family-heading: var(--font-dot);
   --font-family-body: var(--font-body);
 
   /* Radii — Nothing OS style */
@@ -67,13 +67,13 @@
   /* Shadows — Soft, large-radius aesthetic */
   --shadow-1: none;
   --shadow-2: 0 4px 20px rgba(0, 0, 0, 0.15);
-  --shadow-3: 0 8px 40px rgba(0, 0, 0, 0.2);
-  --shadow-glow: 0 8px 32px rgba(215, 25, 33, 0.15);
+  --shadow-3: 0 8px 40px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 8px 32px rgba(255, 111, 97, 0.2);
 
   /* Glassmorphism */
-  --glass-bg: rgba(27, 27, 29, 0.7);
-  --glass-blur: 20px;
-  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-bg: rgba(23, 23, 23, 0.7);
+  --glass-blur: 10px;
+  --glass-border: rgba(255, 255, 255, 0.08);
 
   /* Cinematic Easing */
   --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
@@ -85,17 +85,17 @@
   --n-bg: #FFFFFF;
   --n-surface: #F5F5F5;
   --n-surface-elevated: #EBEBEB;
-  --n-on-surface: #1B1B1D;
+  --n-on-surface: #171717;
   --n-on-surface-muted: #666666; /* Darkened from #999999 for better readability */
   --n-outline: #E0E0E0;
-  --n-accent: #D71921;
-  --n-accent-dim: rgba(215, 25, 33, 0.1);
+  --n-accent: #FF6F61;
+  --n-accent-dim: rgba(255, 111, 97, 0.1);
   --n-accent-yellow: #FACC15;
   --n-accent-yellow-dim: rgba(250, 204, 21, 0.1);
 
   --shadow-2: 0 4px 20px rgba(0, 0, 0, 0.06);
   --shadow-3: 0 8px 40px rgba(0, 0, 0, 0.1);
-  --shadow-glow: 0 8px 32px rgba(215, 25, 33, 0.1);
+  --shadow-glow: 0 8px 32px rgba(255, 111, 97, 0.15);
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(0, 0, 0, 0.06);
 }
