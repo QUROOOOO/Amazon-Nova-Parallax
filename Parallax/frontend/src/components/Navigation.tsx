@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Zap, Database, Users, Repeat, DollarSign, Sun, Moon, Settings, LogOut, User } from 'lucide-react';
+import { Zap, Users, Repeat, DollarSign, Sun, Moon, Settings, LogOut, User } from 'lucide-react';
 import { fetchUserAttributes } from 'aws-amplify/auth';
 import { signOut } from 'aws-amplify/auth';
 import SettingsModal from './SettingsModal';
 import './Navigation.css';
+import { motion } from 'framer-motion';
 
 export default function Navigation() {
   const navigate = useNavigate();
 
   const navItems = [
-    { path: '/dashboard', icon: Zap, label: 'Spark' },
-    { path: '/vault', icon: Database, label: 'Vault' },
+    { path: '/dashboard', icon: Zap, label: 'Vault' }, 
     { path: '/matchmaker', icon: Users, label: 'Match' },
     { path: '/repurpose', icon: Repeat, label: 'Lab' },
     { path: '/monetization', icon: DollarSign, label: 'Earn' },
@@ -106,71 +106,84 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className="n-nav">
-        {/* Navigation Items — Top/Left aligned */}
-        <div className="n-nav-items">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => `n-nav-item ${isActive ? 'active' : ''}`}
-              title={item.label}
-            >
-              <item.icon size={20} strokeWidth={1.5} />
-              <span className="n-nav-label">{item.label}</span>
-            </NavLink>
-          ))}
+      <motion.nav 
+        className="n-nav"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 15, mass: 1 }}
+      >
+        {/* Left Side: Logo */}
+        <div className="n-nav-left">
+          <NavLink to="/dashboard" className="n-nav-logo">
+            <Zap size={24} color="#FF6F61" /> Parallax
+          </NavLink>
         </div>
 
-        {/* Account Avatar — Bottom of rail */}
-        <div className="n-nav-account" ref={menuRef}>
-          <button
-            className="n-account-btn"
-            onClick={() => setShowAccountMenu(!showAccountMenu)}
-            title="Account"
-          >
-              {userImage ? (
-              <img src={userImage} alt="Profile" style={{ width: 32, height: 32, borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(255,255,255,0.1)' }} />
-            ) : (
-              <span className="n-account-initials">{getInitials()}</span>
-            )}
-          </button>
-          {showAccountMenu && (
-            <div className="n-account-menu">
-              <div className="n-account-info">
-                <div className="n-account-avatar">
-                  {userImage ? (
-                    <img src={userImage} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
-                  ) : (
-                    getInitials()
-                  )}
+        {/* Right Side: Links & Account */}
+        <div className="n-nav-right">
+          <div className="n-nav-items">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) => `n-nav-item ${isActive ? 'active' : ''}`}
+                title={item.label}
+              >
+                <item.icon size={18} strokeWidth={2} />
+                <span className="n-nav-label">{item.label}</span>
+              </NavLink>
+            ))}
+          </div>
+
+          <div className="n-nav-account" ref={menuRef}>
+            <button
+              className="n-account-btn"
+              onClick={() => setShowAccountMenu(!showAccountMenu)}
+              title="Account"
+            >
+                {userImage ? (
+                <img src={userImage} alt="Profile" style={{ width: 32, height: 32, borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(255,255,255,0.1)' }} />
+              ) : (
+                <span className="n-account-initials">{getInitials()}</span>
+              )}
+            </button>
+            {showAccountMenu && (
+              <div className="n-account-menu">
+                <div className="n-account-info">
+                  <div className="n-account-avatar">
+                    {userImage ? (
+                      <img src={userImage} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                    ) : (
+                      getInitials()
+                    )}
+                  </div>
+                  <div>
+                    <div className="n-account-name">{userName}</div>
+                    <div className="n-account-email body-small text-muted">{userEmail}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="n-account-name">{userName}</div>
-                  <div className="n-account-email body-small text-muted">{userEmail}</div>
-                </div>
+                <div className="n-account-divider" />
+                
+                <button className="n-account-menu-item" onClick={toggleTheme}>
+                  {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />} 
+                  {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                </button>
+                <button className="n-account-menu-item" onClick={handleOpenSettings}>
+                  <Settings size={14} /> Settings
+                </button>
+                <button className="n-account-menu-item" onClick={() => { setShowAccountMenu(false); navigate('/profile'); }}>
+                  <User size={14} /> My Profile
+                </button>
+                
+                <div className="n-account-divider" />
+                <button className="n-account-menu-item n-logout" onClick={handleLogout}>
+                  <LogOut size={14} /> Log Out
+                </button>
               </div>
-              <div className="n-account-divider" />
-              
-              <button className="n-account-menu-item" onClick={toggleTheme}>
-                {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />} 
-                {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-              </button>
-              <button className="n-account-menu-item" onClick={handleOpenSettings}>
-                <Settings size={14} /> Settings
-              </button>
-              <button className="n-account-menu-item" onClick={() => { setShowAccountMenu(false); navigate('/profile'); }}>
-                <User size={14} /> My Profile
-              </button>
-              
-              <div className="n-account-divider" />
-              <button className="n-account-menu-item n-logout" onClick={handleLogout}>
-                <LogOut size={14} /> Log Out
-              </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Settings Modal */}
       <SettingsModal

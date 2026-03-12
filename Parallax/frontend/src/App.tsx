@@ -9,11 +9,9 @@ import Monetization from './pages/Monetization';
 import Profile from './pages/Profile';
 import Navigation from './components/Navigation';
 import CustomCursor from './components/CustomCursor';
-import ParticleBackground from './components/ParticleBackground';
 import ProtectedRoute from './components/ProtectedRoute';
 import Onboarding from './pages/Onboarding';
 import './styles/App.css';
-import { useState, useEffect } from 'react';
 
 function AppRoutes() {
   const location = useLocation();
@@ -52,22 +50,8 @@ function AppRoutes() {
 }
 
 function App() {
-  const [animationsDisabled, setAnimationsDisabled] = useState(() => {
-    return localStorage.getItem('animationsDisabled') === 'true';
-  });
-
-  useEffect(() => {
-    const handleAnimationsToggle = (event: CustomEvent) => {
-      setAnimationsDisabled(event.detail.disabled);
-    };
-
-    window.addEventListener('animationsToggled', handleAnimationsToggle as EventListener);
-    return () => window.removeEventListener('animationsToggled', handleAnimationsToggle as EventListener);
-  }, []);
-
   return (
     <Router>
-      <ParticleBackground isStatic={animationsDisabled} />
       <CustomCursor />
       <AppRoutes />
     </Router>

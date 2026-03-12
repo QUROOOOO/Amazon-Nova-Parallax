@@ -5,60 +5,80 @@
 
 .n-nav {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
+  height: 72px;
   z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-8) var(--space-16);
-  background: var(--n-bg);
-  border-top: 1px solid var(--n-outline);
+  padding: 0 var(--space-24);
+  background: rgba(10, 10, 10, 0.9); /* Pure OLED black + glass */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--n-outline);
+}
+
+.n-nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.n-nav-logo {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.n-nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
 }
 
 .n-nav-items {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
-  flex: 1;
-  justify-content: space-around;
+  gap: var(--space-8);
 }
 
 .n-nav-item {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: var(--space-8) var(--space-12);
-  border-radius: var(--radius-md);
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-16);
+  border-radius: 9999px; /* Pill shape for top nav */
   color: var(--n-on-surface-muted);
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
 }
 
 .n-nav-label {
-  font-size: 0.625rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.n-nav-item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .n-nav-item.active {
-  color: var(--n-on-surface);
-  background: var(--n-surface-elevated);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .n-nav-item.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 20%;
-  right: 20%;
-  height: 2px;
-  border-radius: 2px 2px 0 0;
-  background: var(--n-on-surface);
+  content: none; /* Remove bottom/left line */
 }
 
 
@@ -182,50 +202,10 @@
   color: var(--n-accent);
 }
 
-/* === DESKTOP: Left Rail === */
+/* === DESKTOP OVERRIDES NO LONGER NEEDED FOR LEFT RAIL === */
 @media (min-width: 768px) {
-  .n-nav {
-    top: 0;
-    bottom: 0;
-    right: auto;
-    width: 72px;
-    flex-direction: column;
-    padding: var(--space-20) var(--space-8);
-    border-top: none;
-    border-right: 1px solid var(--n-outline);
-    justify-content: flex-start;
-    gap: var(--space-16);
-  }
-
+  /* Removed the entire left-rail reset logic because mobile and desktop are roughly top-bar now */
   .n-nav-account {
-    display: block;
-  }
-
-  .n-nav-items {
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: var(--space-4);
-    flex: 1;
-    width: 100%;
-  }
-
-  .n-nav-item {
-    padding: var(--space-12) var(--space-8);
-    width: 100%;
-  }
-
-  .n-nav-item.active::after {
-    bottom: 20%;
-    left: 0;
-    right: auto;
-    top: 20%;
-    width: 2px;
-    height: auto;
-    transform: none;
-    border-radius: 0 2px 2px 0;
-  }
-
-  .n-nav-label {
-    font-size: 0.5625rem;
+    display: block; /* Ensure it's shown on desktop */
   }
 }

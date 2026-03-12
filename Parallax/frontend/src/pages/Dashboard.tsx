@@ -332,36 +332,60 @@ export default function Dashboard() {
   return (
     <DashboardErrorBoundary>
     <div className={`dashboard-container ${!hasNotes && !selectedNoteId ? 'no-scroll' : ''}`}>
-      {/* === STICKY HEADER: Title + Search only === */}
-      <div className="spark-sticky-header">
+      {/* === HIGH-HUMAN HERO SECTION === */}
+      <motion.div 
+        className="hero-section"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 15, mass: 1 }}
+        style={{ padding: '40px 24px 20px', display: 'flex', alignItems: 'center', gap: '24px' }}
+      >
+        <img 
+          src="https://images.unsplash.com/featured/?human,face,expressive" 
+          alt="Creator" 
+          style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #FF6F61', boxShadow: '0 8px 24px rgba(255, 111, 97, 0.2)' }}
+        />
         <div>
-          <h1 className="page-title dot-display">
-            <span className="typography-reveal"><span>The Spark <Sparkles className="inline-icon" size={28} /></span></span>
+          <h1 className="page-title dot-display" style={{ margin: '0 0 8px 0', fontSize: '2.5rem', fontFamily: 'var(--font-display, "Space Grotesk")' }}>
+            <span className="typography-reveal"><span>Welcome back, Creator.</span></span>
           </h1>
+          <p className="body-medium text-muted" style={{ margin: 0, fontSize: '1.1rem', fontFamily: 'var(--font-body, "Inter")' }}>
+            {hasNotes ? 'Your ideas, captured.' : 'The void awaits. Capture your first idea.'}
+          </p>
         </div>
-        {hasNotes && <p className="body-medium text-muted" style={{ margin: 0 }}>Your ideas, captured.</p>}
-        
-        {!selectedNoteId && hasNotes && (
-          <div className="search-container">
-            <Search size={16} className="search-icon text-muted" />
-            <input
-              type="text"
-              className="search-input body-medium"
-              placeholder="Search notes..."
-              value={searchQuery}
-              onChange={(e) => handleSearchChange(e.target.value)}
-            />
-            <span className="note-count body-small text-muted">{activeIdeas.length}</span>
-          </div>
-        )}
-      </div>
+      </motion.div>
 
-      <div className="ideas-feed">
+      {!selectedNoteId && hasNotes && (
+        <motion.div 
+          className="search-container"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 100, damping: 15, mass: 1, delay: 0.1 }}
+          style={{ margin: '0 24px 24px 24px' }}
+        >
+          <Search size={16} className="search-icon text-muted" />
+          <input
+            type="text"
+            className="search-input body-medium"
+            placeholder="Search notes..."
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+          />
+          <span className="note-count body-small text-muted">{activeIdeas.length}</span>
+        </motion.div>
+      )}
+
+      <motion.div 
+        className="ideas-feed"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 15, mass: 1, delay: 0.2 }}
+      >
         {/* Empty States & Grid */}
         {!hasNotes ? (
           <div className="empty-state">
-            <div className="empty-icon-wrap">
-              <Sparkles size={28} className="text-muted" />
+            <div className="empty-icon-wrap" style={{ background: 'rgba(255, 111, 97, 0.1)' }}>
+              <Sparkles size={28} style={{ color: '#FF6F61' }} />
             </div>
             <h3 className="headline-medium">The void awaits.</h3>
             <p className="body-medium text-muted">Tap + to capture your first idea.</p>
@@ -403,7 +427,7 @@ export default function Dashboard() {
             </AnimatePresence>
           </motion.div>
         ) : null}
-      </div>
+      </motion.div>
 
       {/* UI Elements Portaled outside of Framer Motion's transform context to fix 'position: fixed' bugs */}
       {typeof document !== 'undefined' && createPortal(
@@ -433,9 +457,10 @@ export default function Dashboard() {
             className={`fab ${!hasNotes ? 'fab-intro-pulse' : ''}`}
             onClick={createNewNote}
             title="New Note"
+            style={{ backgroundColor: '#FF6F61', color: '#FFF' }}
           >
             <span style={{ fontSize: '1.5rem', fontWeight: 400, lineHeight: 1, marginBottom: '2px' }}>+</span>
-            <span>New Spark</span>
+            <span>New Parallax</span>
           </button>
 
           {/* Isolated Modal */}
