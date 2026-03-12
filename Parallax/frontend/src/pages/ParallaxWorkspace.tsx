@@ -30,7 +30,7 @@ export default function ParallaxWorkspace() {
   // Output state
   const [isComplete, setIsComplete] = useState(false);
   const [outputBlobUrl, setOutputBlobUrl] = useState<string | null>(null);
-  const [aiHook, setAiHook] = useState<{start_time: string, end_time: string, hook_description: string} | null>(null);
+  const [aiHook, setAiHook] = useState<{start_offset_seconds: number, end_offset_seconds: number, hook_reason: string, processed_url: string} | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const sourceVideoRef = useRef<HTMLVideoElement>(null);
@@ -259,7 +259,7 @@ export default function ParallaxWorkspace() {
       } catch (err) {
         console.error("AI Pipeline Error:", err);
         return {
-          start_time: "00:00", end_time: "00:10", hook_description: "Failed to connect to Amazon Nova API. Verify backend logs."
+          start_offset_seconds: 0, end_offset_seconds: 10, hook_reason: "Failed to connect to Amazon Nova API. Verify backend logs."
         };
       }
     })();
@@ -291,10 +291,10 @@ export default function ParallaxWorkspace() {
   }, [uploadedFile]);
 
   const handleDownload = () => {
-    if (!outputBlobUrl) return;
+    if (!outputBlobUrl && !aiHook?.processed_url) return;
     const a = document.createElement('a');
-    a.href = outputBlobUrl;
-    a.download = `parallax-clip-${Date.now()}.webm`;
+    a.href = aiHook?.processed_url || outputBlobUrl || '';
+    a.download = `parallax-clip-${Date.now()}.mp4`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -536,7 +536,7 @@ export default function ParallaxWorkspace() {
                     <div className="lab-output-content">
                       <div className="lab-output-video-wrap">
                         <video
-                          src={outputBlobUrl}
+                          src={aiHook?.processed_url || outputBlobUrl}
                           controls
                           autoPlay
                           loop
@@ -557,7 +557,7 @@ export default function ParallaxWorkspace() {
                       <div className="lab-output-details">
                         <h4 className="title-large" style={{ fontSize: '1.5rem', marginBottom: '8px' }}>AI-Trimmed Square Clip</h4>
                         <span className="lab-tag" style={{ fontSize: '0.85rem', padding: '6px 14px', background: 'var(--n-accent)', color: '#fff', border: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', marginBottom: '16px' }}>
-                          <Scissors size={14} /> {aiHook ? `${aiHook.start_time} → ${aiHook.end_time}` : '0s → 10s'} • 1:1 Square
+                          <Scissors size={14} /> {aiHook ? `${aiHook.start_offset_seconds}s → ${aiHook.end_offset_seconds}s` : '0s → 10s'} • 1:1 Square
                         </span>
 
                         <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '16px', padding: '20px', border: '1px solid var(--n-outline)', marginBottom: '20px' }}>
@@ -565,7 +565,7 @@ export default function ParallaxWorkspace() {
                             <Sparkles size={16} color="var(--n-accent)"/> Amazon Nova AI Hook Extraction
                           </h5>
                           <p className="body-medium text-muted" style={{ margin: 0, lineHeight: 1.7 }}>
-                            {aiHook ? aiHook.hook_description : 'The first 10 seconds of your video have been extracted and intelligently cropped to a perfect 1:1 square format — optimized for Instagram Reels, YouTube Shorts, and TikTok.'}
+                            {aiHook ? aiHook.hook_reason : 'The first 10 seconds of your video have been extracted and intelligently cropped to a perfect 1:1 square format — optimized for Instagram Reels, YouTube Shorts, and TikTok.'}
                           </p>
                         </div>
 
