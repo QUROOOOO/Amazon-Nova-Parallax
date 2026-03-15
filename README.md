@@ -105,29 +105,6 @@ User → React/Vite frontend → Lambda Function URL (video ingest) → S3 + Clo
 
 ---
 
-# Installation
-
-## Clone the repository
-```bash
-git clone https://github.com/QUROOOOO/Amazon-Nova-Parallax.git
-cd Amazon-Nova-Parallax/Parallax
-```
-
-## Frontend setup
-```bash
-cd frontend
-npm install
-cp .env.example .env    # fill values from CDK outputs and cloud consoles
-npm run dev
-```
-
-## Backend setup
-```bash
-cd backend
-npm install
-cp .env.example .env    # add Cloudinary, Gemini, YouTube, region
-npx cdk deploy          # deploys API Gateway, Lambda, Cognito, S3, DynamoDB
-```
 
 ## Environment variables
 
