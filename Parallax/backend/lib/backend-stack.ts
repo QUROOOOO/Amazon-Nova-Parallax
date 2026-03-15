@@ -53,8 +53,7 @@ export class BackendStack extends cdk.Stack {
     });
 
     // Ideas & Trends Table (The Spark & Research Vault)
-    const parallaxMediaTable = new dynamodb.Table(this, 'ParallaxMediaTable', {
-      tableName: 'ParallaxMediaTable',
+    const contentTable = new dynamodb.Table(this, 'ContentTable', {
       partitionKey: { name: 'contentId', type: dynamodb.AttributeType.STRING },
       sortKey: { name: 'userId', type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -62,13 +61,13 @@ export class BackendStack extends cdk.Stack {
     });
     
     // Add GSI to fetch all content for a user easily
-    parallaxMediaTable.addGlobalSecondaryIndex({
+    contentTable.addGlobalSecondaryIndex({
       indexName: 'UserContentIndex',
       partitionKey: { name: 'userId', type: dynamodb.AttributeType.STRING },
       sortKey: { name: 'createdAt', type: dynamodb.AttributeType.STRING },
     });
 
-    // Parallax Workspace Jobs Table
+    // Repurpose Lab Jobs Table
     const jobsTable = new dynamodb.Table(this, 'JobsTable', {
       partitionKey: { name: 'jobId', type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -131,10 +130,10 @@ export class BackendStack extends cdk.Stack {
       memorySize: 128, // Credit Conservation
       environment: {
         USERS_TABLE: usersTable.tableName,
-        CONTENT_TABLE: parallaxMediaTable.tableName,
+        CONTENT_TABLE: contentTable.tableName,
         USER_POOL_ID: userPool.userPoolId,
         REGION: cdk.Stack.of(this).region,
-        NOVA_API_KEY: process.env.NOVA_API_KEY || '',
+        GEMINI_API_KEY: process.env.GEMINI_API_KEY || '',
       },
     };
 
@@ -144,7 +143,7 @@ export class BackendStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, 'handlers/post-confirmation')),
       environment: {
         ...lambdaProps.environment,
-        SENDER_EMAIL: process.env.SENDER_EMAIL || 'welcome@parallax.ai',
+        SENDER_EMAIL: process.env.SENDER_EMAIL || 'welcome@parallax.video',
       }
     });
 
@@ -160,7 +159,7 @@ export class BackendStack extends cdk.Stack {
       ...lambdaProps,
       code: lambda.Code.fromAsset(path.join(__dirname, 'handlers/spark')),
     });
-    parallaxMediaTable.grantReadWriteData(sparkHandler);
+    contentTable.grantReadWriteData(sparkHandler);
 
     // Smart Vault (Trends) Handler
     const trendsHandler = new lambda.Function(this, 'TrendsHandler', {
@@ -170,7 +169,7 @@ export class BackendStack extends cdk.Stack {
       environment: {
         ...lambdaProps.environment,
         YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY || '',
-        NOVA_API_KEY: process.env.NOVA_API_KEY || ''
+        GEMINI_API_KEY: process.env.GEMINI_API_KEY || ''
       }
     });
 
@@ -195,23 +194,38 @@ export class BackendStack extends cdk.Stack {
       }
     });
 
-    // Cloudinary Video Analysis Handler (Amazon Nova)
+    // Cloudinary Video Analysis Handler — Amazon Nova Parallax Pipeline
     const cloudinaryAnalyzeHandler = new lambda.Function(this, 'CloudinaryAnalyzeHandler', {
       ...lambdaProps,
       code: lambda.Code.fromAsset(path.join(__dirname, 'handlers/cloudinary-analyze')),
       timeout: cdk.Duration.minutes(5), // Bypass API Gateway 29s limit
-      memorySize: 256,
+      memorySize: 512, // Enough for base64 video buffer
       environment: {
         ...lambdaProps.environment,
         CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME || '',
         CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY || '',
         CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET || '',
+        IMAGE_BUCKET: imageBucket.bucketName,                   // Required for S3 upload → Bedrock
+        ACCOUNT_ID: cdk.Stack.of(this).account,                 // Required for Bedrock S3 bucket owner
+        ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS || 'https://main.d16fcylhtesdpm.amplifyapp.com,http://localhost:5173',
       }
     });
 
+    // Grant S3 write permission for video upload (used by Bedrock S3 URI)
+    imageBucket.grantWrite(cloudinaryAnalyzeHandler);
+    imageBucket.grantRead(cloudinaryAnalyzeHandler);
+
+    // Grant Bedrock permissions to invoke Amazon Nova Lite
     cloudinaryAnalyzeHandler.addToRolePolicy(new iam.PolicyStatement({
-      actions: ['bedrock:InvokeModel'],
-      resources: ['*'],
+      actions: [
+        'bedrock:InvokeModel',
+        'bedrock:Converse',
+        'bedrock:ConverseStream',
+      ],
+      resources: [
+        `arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-lite-v1:0`,
+        `arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-pro-v1:0`,
+      ],
     }));
 
     // Direct Lambda Function URL — bypasses API Gateway 29s hard timeout
@@ -326,9 +340,12 @@ export class BackendStack extends cdk.Stack {
 
     // POST /upload -> Get S3 Presigned URL for Image Uploads
     const uploadResource = api.root.addResource('upload');
-    uploadResource.addMethod('POST', new apigateway.LambdaIntegration(uploadHandler));
+    uploadResource.addMethod('POST', new apigateway.LambdaIntegration(uploadHandler), {
+      authorizer,
+      authorizationType: apigateway.AuthorizationType.COGNITO,
+    });
 
-    // Parallax Workspace API Routes (Cloudinary Pipeline)
+    // Repurpose Lab API Routes (Cloudinary Pipeline)
     const repurposeResource = api.root.addResource('repurpose');
     const repurposeCloudinaryUpload = repurposeResource.addResource('cloudinary-upload');
     repurposeCloudinaryUpload.addMethod('POST', new apigateway.LambdaIntegration(cloudinaryUploadHandler), {
@@ -371,13 +388,13 @@ export class BackendStack extends cdk.Stack {
     });
 
     // Outputs to use in Frontend
-    new cdk.CfnOutput(this, 'ApiEndpoint', { value: api.url });
+    new cdk.CfnOutput(this, 'ParallaxApiEndpoint', { value: api.url });
     new cdk.CfnOutput(this, 'UserPoolId', { value: userPool.userPoolId });
     new cdk.CfnOutput(this, 'UserPoolClientId', { value: userPoolClient.userPoolClientId });
     new cdk.CfnOutput(this, 'UsersTableName', { value: usersTable.tableName });
     new cdk.CfnOutput(this, 'ProfilesTableName', { value: profilesTable.tableName });
     new cdk.CfnOutput(this, 'ConnectionsTableName', { value: connectionsTable.tableName });
-    new cdk.CfnOutput(this, 'ParallaxMediaTableName', { value: parallaxMediaTable.tableName });
+    new cdk.CfnOutput(this, 'ContentTableName', { value: contentTable.tableName });
     new cdk.CfnOutput(this, 'JobsTableName', { value: jobsTable.tableName });
     new cdk.CfnOutput(this, 'ImageBucketName', { value: imageBucket.bucketName });
     new cdk.CfnOutput(this, 'AnalyzeFunctionUrl', { value: analyzeUrl.url });
