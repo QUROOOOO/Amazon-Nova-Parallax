@@ -99,13 +99,13 @@ export default function Onboarding() {
         social,
         status,
       };
-      localStorage.setItem('vibe_user_profile', JSON.stringify(payload));
+      localStorage.setItem('parallax_user_profile', JSON.stringify(payload));
       // Also update the auth display name
-      const existingAuth = localStorage.getItem('vibe_user_auth');
+      const existingAuth = localStorage.getItem('parallax_user_auth');
       if (existingAuth) {
         const authData = JSON.parse(existingAuth);
         authData.name = fullName || authData.name;
-        localStorage.setItem('vibe_user_auth', JSON.stringify(authData));
+        localStorage.setItem('parallax_user_auth', JSON.stringify(authData));
       }
       setTimeout(() => navigate('/vault'), 400);
     } catch {
@@ -349,3 +349,4 @@ export default function Onboarding() {
     </div>
   );
 }
+

@@ -26,7 +26,7 @@ exports.handler = async (event) => {
 
   try {
     const timestamp = Math.round(new Date().getTime() / 1000);
-    const folder = 'repurpose-lab';
+    const folder = 'parallax-lab';
     const paramsToSign = {
       timestamp: timestamp,
       folder: folder

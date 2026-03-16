@@ -166,7 +166,7 @@
   text-transform: uppercase;
 }
 
-.vibe-score {
+.parallax-score {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 700;
@@ -558,3 +558,4 @@
   font-size: 0.85rem;
   opacity: 0.9;
 }
+

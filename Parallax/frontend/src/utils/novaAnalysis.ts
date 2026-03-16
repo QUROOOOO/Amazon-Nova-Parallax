@@ -156,12 +156,12 @@ export async function analyzeSynergyWithNova(targetProfile: any, userNotes: any[
     .filter(Boolean)
     .join('\n---\n');
 
-  const targetDesc = `${targetProfile.name} is a ${targetProfile.industry} with a Vibe Score of ${targetProfile.vibeScore}. Badges: ${targetProfile.badges.join(', ')}.`;
+  const targetDesc = `${targetProfile.name} is a ${targetProfile.industry} with a PARALLAX Score of ${targetProfile.parallaxScore}. Badges: ${targetProfile.badges.join(', ')}.`;
 
   const prompt = `You are an elite AI Matchmaker for social media creators.
 I have a creator looking for a creative collaborator.
 Here are the creator's recent ideas/notes ("The Spark"):
-${notesText ? notesText.slice(0, 3000) : "No notes yet. They rely on their general vibe and creative intuition."}
+${notesText ? notesText.slice(0, 3000) : "No notes yet. They rely on their general PARALLAX and creative intuition."}
 
 Here is the potential collaborator's profile:
 ${targetDesc}
@@ -182,5 +182,6 @@ Respond ONLY with valid JSON exactly like this, no markdown formatting:
     throw new Error('AI returned invalid JSON for synergy calculation. Please try again.');
   }
 }
+
 
 

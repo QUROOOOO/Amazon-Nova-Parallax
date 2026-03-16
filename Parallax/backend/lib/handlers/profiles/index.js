@@ -62,17 +62,21 @@ exports.handler = async (event) => {
     // Exclude the current user from their own recommendations
     let profiles = Items || [];
     profiles = profiles.filter(p => p.userId !== currentUserId);
+    profiles = profiles.map(p => ({
+      ...p,
+      parallaxScore: Number.isFinite(p.parallaxScore) ? p.parallaxScore : 0,
+    }));
 
-    // If the table is completely empty, seed it with mock users for the hackathon demo
+    // If the table is completely empty, seed it with mock users for the demo
     if (profiles.length === 0 && (!industryFilter || industryFilter === 'All')) {
-      console.log('No profiles found. Seeding mock data for Hackathon Demo...');
+      console.log('No profiles found. Seeding mock data for demo...');
       const mockProfiles = [
         {
           userId: 'mock-1',
           name: 'Sarah Chen',
           avatarUrl: 'https://i.pravatar.cc/150?u=sarah',
           industry: 'Video Editor',
-          vibeScore: 98,
+          parallaxScore: 98,
           status: 'Available',
           badges: ['Premiere Pro', 'After Effects', 'Fast Responder'],
           portfolios: [
@@ -85,7 +89,7 @@ exports.handler = async (event) => {
           name: 'David Rodriguez',
           avatarUrl: 'https://i.pravatar.cc/150?u=david',
           industry: 'ML Engineer',
-          vibeScore: 94,
+          parallaxScore: 94,
           status: 'In a Collab',
           badges: ['AWS Certified', 'Bedrock Expert'],
           portfolios: [
@@ -98,7 +102,7 @@ exports.handler = async (event) => {
           name: 'Aisha Patel',
           avatarUrl: 'https://i.pravatar.cc/150?u=aisha',
           industry: 'Prompt Architect',
-          vibeScore: 99,
+          parallaxScore: 99,
           status: 'Available',
           badges: ['Top Rated', 'Creative Direction'],
           portfolios: [

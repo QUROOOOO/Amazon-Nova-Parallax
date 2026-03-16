@@ -61,7 +61,7 @@ export default function ParallaxWorkspace() {
   const acceptFile = (file: File) => {
     setUploadError(null);
     if (file.size > 50 * 1024 * 1024) {
-      setUploadError("Hackathon Limit: Please upload a video under 50MB and 3 minutes.");
+      setUploadError("Upload limit: Please upload a video under 50MB and 3 minutes.");
       return;
     }
 
@@ -70,7 +70,7 @@ export default function ParallaxWorkspace() {
     videoNode.onloadedmetadata = () => {
       window.URL.revokeObjectURL(videoNode.src);
       if (videoNode.duration > 180) {
-        setUploadError("Hackathon Limit: Please upload a video under 50MB and 3 minutes.");
+        setUploadError("Upload limit: Please upload a video under 50MB and 3 minutes.");
         return;
       }
       if (previewUrl) window.URL.revokeObjectURL(previewUrl);
@@ -507,7 +507,7 @@ export default function ParallaxWorkspace() {
 
                         <div className="lab-output-tags" style={{ marginBottom: '20px', gap: '8px', display: 'flex', flexWrap: 'wrap' }}>
                           <span className="lab-tag">#AmazonNova</span>
-                          <span className="lab-tag">#Hackathon</span>
+                          <span className="lab-tag">#Parallax</span>
                           <span className="lab-tag">#SquareCrop</span>
                           <span className="lab-tag">#Parallax</span>
                         </div>

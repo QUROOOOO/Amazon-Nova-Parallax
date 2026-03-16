@@ -1,6 +1,6 @@
 [
     {
-        "OutputKey": "VibeCollabApiEndpoint5D193839",
+        "OutputKey": "ParallaxApiEndpoint5D193839",
         "OutputValue": "https://hykjovvwj3.execute-api.us-east-1.amazonaws.com/prod/"
     },
     {
@@ -37,6 +37,6 @@
     },
     {
         "OutputKey": "ImageBucketName",
-        "OutputValue": "backendstack-vibecollabimagebucket1968a6d4-nyvkkbtfwndk"
+        "OutputValue": "backendstack-Parallaximagebucket1968a6d4-nyvkkbtfwndk"
     }
 ]

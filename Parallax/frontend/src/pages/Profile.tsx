@@ -67,7 +67,7 @@ export default function Profile() {
         setEmail(attrs.email || '');
       } catch { /* not signed in */ }
 
-      const saved = localStorage.getItem('vibe_onboarding_data');
+      const saved = localStorage.getItem('parallax_onboarding_data');
       if (saved) {
         try {
           const data = JSON.parse(saved);
@@ -83,7 +83,7 @@ export default function Profile() {
         } catch { /* bad data */ }
       }
 
-      const savedMedia = localStorage.getItem('vibe_profile_media');
+      const savedMedia = localStorage.getItem('parallax_profile_media');
       if (savedMedia) {
         try { setMediaItems(JSON.parse(savedMedia)); } catch { /* */ }
       }
@@ -97,11 +97,11 @@ export default function Profile() {
       fullName, nickname, tagline, niches: selectedNiches,
       tools, portfolio, social, status, avatarPreview
     };
-    localStorage.setItem('vibe_onboarding_data', JSON.stringify(profileData));
-    // Also update vibe_user_auth for Navigation avatar
+    localStorage.setItem('parallax_onboarding_data', JSON.stringify(profileData));
+    // Also update parallax_user_auth for Navigation avatar
     const authData = { name: fullName || nickname, image: avatarPreview };
-    localStorage.setItem('vibe_user_auth', JSON.stringify(authData));
-    localStorage.setItem('vibe_profile_media', JSON.stringify(mediaItems));
+    localStorage.setItem('parallax_user_auth', JSON.stringify(authData));
+    localStorage.setItem('parallax_profile_media', JSON.stringify(mediaItems));
     setTimeout(() => {
       setIsSaving(false);
       setIsEditing(false);
@@ -456,3 +456,4 @@ export default function Profile() {
     </div>
   );
 }
+

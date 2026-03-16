@@ -336,9 +336,9 @@ Respond ONLY with valid JSON in this exact format:
     } catch (error) {
       console.error(`Pipeline error for job ${jobId}:`, error);
       
-      // HACKATHON DEMO FALLBACK: Override AWS limits to ensure perfect presentation flow
+      // DEMO FALLBACK: Override AWS limits to ensure reliable presentation flow
       if (error.name === 'SubscriptionRequiredException' || (error.message && error.message.includes('SubscriptionRequired'))) {
-         console.log('AWS AI Services blocked by Subscription limits. Falling back to Hackathon Demo Mode mock pipeline...');
+         console.log('AWS AI Services blocked by subscription limits. Falling back to demo mode mock pipeline...');
          
          await updateJobStatus(jobId, 'TRANSCRIBING', 'AWS AI Blocked. Demo Mode: Simulating AWS Transcribe...');
          await new Promise(r => setTimeout(r, 4000));

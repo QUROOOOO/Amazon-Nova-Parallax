@@ -219,7 +219,7 @@ export default function Auth() {
       // Realistically we'd use Amplify API 'post', but to avoid complex config fetching we can use native fetch on the endpoint if CORS allows.
       // Easiest is to save it locally for now if API isn't perfectly configured with auth headers on frontend yet.
       // But we will hit the backend as requested:
-      localStorage.setItem('vibe_user_auth', JSON.stringify({
+      localStorage.setItem('parallax_user_auth', JSON.stringify({
          name: fullName,
          roles: selectedRoles,
          platforms: selectedPlatforms,
@@ -310,7 +310,7 @@ export default function Auth() {
                 <div className="auth-input-row">
                   <input 
                     type="email" 
-                    placeholder="creator@vibe.ai" 
+                    placeholder="creator@parallax.ai" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     autoFocus
@@ -572,3 +572,4 @@ export default function Auth() {
     </div>
   );
 }
+

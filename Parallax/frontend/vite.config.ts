@@ -19,6 +19,10 @@ export default defineConfig({
     },
   },
   server: {
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+    },
     proxy: {
       // Proxy transcript requests through Vite dev server to bypass CORS
       '/api/transcript-proxy/lemnoslife': {

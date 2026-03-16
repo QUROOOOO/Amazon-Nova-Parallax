@@ -30,7 +30,7 @@ export class BackendStack extends cdk.Stack {
         requireDigits: false,
         requireSymbols: false,
       },
-      removalPolicy: cdk.RemovalPolicy.DESTROY, // For hackathon purposes
+      removalPolicy: cdk.RemovalPolicy.DESTROY, // For demo purposes
     });
 
     const userPoolClient = new cognito.UserPoolClient(this, 'ParallaxAppClient', {
@@ -67,7 +67,7 @@ export class BackendStack extends cdk.Stack {
       sortKey: { name: 'createdAt', type: dynamodb.AttributeType.STRING },
     });
 
-    // Repurpose Lab Jobs Table
+    // Parallax Lab Jobs Table
     const jobsTable = new dynamodb.Table(this, 'JobsTable', {
       partitionKey: { name: 'jobId', type: dynamodb.AttributeType.STRING },
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
@@ -90,7 +90,7 @@ export class BackendStack extends cdk.Stack {
     profilesTable.addGlobalSecondaryIndex({
       indexName: 'IndustryIndex',
       partitionKey: { name: 'industry', type: dynamodb.AttributeType.STRING },
-      sortKey: { name: 'vibeScore', type: dynamodb.AttributeType.NUMBER },
+      sortKey: { name: 'parallaxScore', type: dynamodb.AttributeType.NUMBER },
     });
 
     // Matchmaker Connections Table (Sync Requests)
@@ -345,7 +345,7 @@ export class BackendStack extends cdk.Stack {
       authorizationType: apigateway.AuthorizationType.COGNITO,
     });
 
-    // Repurpose Lab API Routes (Cloudinary Pipeline)
+    // Parallax Lab API Routes (Cloudinary Pipeline)
     const repurposeResource = api.root.addResource('repurpose');
     const repurposeCloudinaryUpload = repurposeResource.addResource('cloudinary-upload');
     repurposeCloudinaryUpload.addMethod('POST', new apigateway.LambdaIntegration(cloudinaryUploadHandler), {
@@ -400,3 +400,4 @@ export class BackendStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'AnalyzeFunctionUrl', { value: analyzeUrl.url });
   }
 }
+

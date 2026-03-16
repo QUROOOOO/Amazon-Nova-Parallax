@@ -9,7 +9,7 @@ exports.handler = async (event) => {
   // We only want to send the email when a new user confirms their sign up
   if (event.triggerSource === 'PostConfirmation_ConfirmSignUp') {
     const userEmail = event.request.userAttributes.email;
-    const senderEmail = process.env.SENDER_EMAIL || 'welcome@vibecollab.ai'; // Update this to your verified AWS SES identity in production
+  const senderEmail = process.env.SENDER_EMAIL || 'welcome@parallax.ai'; // Update this to your verified AWS SES identity in production
 
     if (!userEmail) {
       console.log('No email found in user attributes');
@@ -33,16 +33,16 @@ exports.handler = async (event) => {
       </head>
       <body>
         <div class="container">
-          <div class="logo">Vibe Collab AI</div>
+          <div class="logo">Parallax AI</div>
           <h1>Welcome to the Future of Content! 🚀</h1>
           <p>Hi there,</p>
-          <p>Your email has been successfully verified, and your account is now active on <strong>Vibe Collab AI</strong>.</p>
-          <p>You can now start finding perfect <span class="highlight">collaborators</span>, drop brilliant ideas in <span class="highlight">The Spark</span>, discover trends in the <span class="highlight">Smart Vault</span>, and instantly generate viral shorts in the <span class="highlight">Repurpose Lab</span>.</p>
+          <p>Your email has been successfully verified, and your account is now active on <strong>Parallax AI</strong>.</p>
+          <p>You can now start finding perfect <span class="highlight">collaborators</span>, drop brilliant ideas in <span class="highlight">The Spark</span>, discover trends in the <span class="highlight">Smart Vault</span>, and instantly generate viral shorts in the <span class="highlight">Parallax Lab</span>.</p>
           <p>We are thrilled to have you onboard.</p>
           <p>Stay creative,</p>
-          <p><strong>The Vibe Collab Team</strong></p>
+          <p><strong>The Parallax Team</strong></p>
           <div class="footer">
-            &copy; ${new Date().getFullYear()} Vibe Collab AI. Built for the AWS Hackathon.
+            &copy; ${new Date().getFullYear()} Parallax AI. Built for the Amazon Nova AI Hackathon.
           </div>
         </div>
       </body>
@@ -50,14 +50,14 @@ exports.handler = async (event) => {
     `;
 
     const textBody = `
-      Welcome to Vibe Collab AI! 🚀
+      Welcome to Parallax AI! 🚀
       
       Your email has been successfully verified, and your account is now active.
       You can now start finding perfect collaborators, drop brilliant ideas in The Spark, 
-      discover trends in the Smart Vault, and instantly generate viral shorts in the Repurpose Lab.
+      discover trends in the Smart Vault, and instantly generate viral shorts in the Parallax Lab.
       
       Stay creative,
-      The Vibe Collab Team
+      The Parallax Team
     `;
 
     const params = {
@@ -67,7 +67,7 @@ exports.handler = async (event) => {
       },
       Message: {
         Subject: {
-          Data: 'Welcome to Vibe Collab AI! 🚀',
+          Data: 'Welcome to Parallax AI! 🚀',
           Charset: 'UTF-8',
         },
         Body: {
@@ -97,3 +97,4 @@ exports.handler = async (event) => {
   // Always return the event to Cognito so it can proceed
   return event;
 };
+

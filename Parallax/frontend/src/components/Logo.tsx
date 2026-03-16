@@ -10,7 +10,8 @@ export default function Logo() {
           }} />
         ))}
       </div>
-      <span className="n-logo-text">VIBE COLLAB</span>
+      <span className="n-logo-text">Parallax</span>
     </div>
   );
 }
+

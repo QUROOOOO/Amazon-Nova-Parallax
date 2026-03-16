@@ -29,7 +29,7 @@ interface Profile {
   name: string;
   avatarUrl: string;
   industry: string;
-  vibeScore: number;
+  parallaxScore: number;
   status: 'Available' | 'In a Collab' | string;
   badges: string[];
   portfolios: Portfolio[];
@@ -309,7 +309,7 @@ export default function SkillMatchmaker() {
                     <h2>{p.name}</h2>
                     <div className="metrics-row">
                       <span className="industry-tag">{p.industry}</span>
-                      <span className="vibe-score">VIBE {p.vibeScore}</span>
+                      <span className="parallax-score">PARALLAX {p.parallaxScore}</span>
                     </div>
                   </div>
                   <div className={`status-badge ${p.status === 'Available' ? 'status-green' : 'status-red'}`}>
@@ -659,3 +659,4 @@ export default function SkillMatchmaker() {
     </div>
   );
 }
+

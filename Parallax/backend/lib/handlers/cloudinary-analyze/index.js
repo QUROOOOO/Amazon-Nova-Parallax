@@ -45,8 +45,8 @@ const uploadToCloudinary = (buffer, filename) => {
     const uploadStream = cloudinary.uploader.upload_stream(
       {
         resource_type: 'video',
-        folder: 'parallax/repurpose',
-        public_id: `repurpose_${Date.now()}_${filename.split('.')[0]}`,
+        folder: 'parallax/lab',
+        public_id: `parallax_${Date.now()}_${filename.split('.')[0]}`,
       },
       (error, result) => {
         if (error) reject(error);
@@ -120,18 +120,10 @@ exports.handler = async (event) => {
 
     // ── STEP 3: Amazon Nova Lite analyzes video via Bedrock ────
     // Clamp target range: min 8s, max 59s (platform constraint for Shorts/Reels)
-    const MIN_CLIP = 8;
-    const MAX_CLIP = 59;
+    const MIN_CLIP = 10;
+    const MAX_CLIP = 15;
 
-    const systemPrompt = `You are an elite short-form video editor optimizing for retention on YouTube Shorts and Instagram Reels.
-Your goal is to select ONE continuous clip that maximizes viewer engagement.
-Ranked criteria:
-1) Strong hook in the first 1-2 seconds of the chosen clip.
-2) High motion/visual change, emotion, or surprise.
-3) Clear context without awkward cuts; avoid intros/outros and dead air.
-4) Natural ending with a clean cutoff.
-The clip MUST be between ${MIN_CLIP} and ${MAX_CLIP} seconds.
-Return ONLY raw JSON (no markdown, no extra text): {"start_offset_seconds": number, "end_offset_seconds": number, "hook_description": "string"}`;
+    const systemPrompt = 'Find the single best 10-15 sec viral hook. Return ONLY raw JSON: {"start_offset_seconds": number, "end_offset_seconds": number}';
 
     const converseParams = {
       modelId: 'amazon.nova-lite-v1:0',
@@ -151,7 +143,7 @@ Return ONLY raw JSON (no markdown, no extra text): {"start_offset_seconds": numb
               },
             },
             {
-              text: `Analyze the full video and choose the single best clip for short-form engagement. Video duration: ${videoDuration} seconds. Return timestamps in seconds with 0.1s precision.`,
+              text: `Analyze the full video. Choose the single most engaging 10-15s moment for YouTube Shorts and Instagram Reels. Video duration: ${videoDuration} seconds. Return timestamps in seconds with 0.1s precision.`,
             },
           ],
         },
@@ -177,9 +169,13 @@ Return ONLY raw JSON (no markdown, no extra text): {"start_offset_seconds": numb
       throw new Error(`Amazon Nova returned unparseable response: ${rawText.slice(0, 200)}`);
     }
 
-    let start = parseFloat(aiResult.start_offset_seconds) || 0;
-    let end = parseFloat(aiResult.end_offset_seconds) || (start + 30);
-    const hookDescription = aiResult.hook_description || 'AI-selected viral moment';
+    let start = parseFloat(aiResult.start_offset_seconds);
+    let end = parseFloat(aiResult.end_offset_seconds);
+    const hookDescription = 'Viral hook';
+
+    if (!Number.isFinite(start) || !Number.isFinite(end)) {
+      throw new Error('Amazon Nova returned invalid timestamps.');
+    }
 
     // Clamp to valid clip range
     start = Math.max(0, Math.min(start, videoDuration - MIN_CLIP));
@@ -191,10 +187,14 @@ Return ONLY raw JSON (no markdown, no extra text): {"start_offset_seconds": numb
       end = Math.min(start + MIN_CLIP, videoDuration);
     }
     if (end - start > MAX_CLIP) {
-      end = start + MAX_CLIP;
+      end = Math.min(start + MAX_CLIP, videoDuration);
+    }
+    if (end <= start) {
+      start = Math.max(0, Math.min(start, videoDuration - MIN_CLIP));
+      end = Math.min(start + MIN_CLIP, videoDuration);
     }
 
-    console.log(`[Nova] Clip: ${start.toFixed(1)}s → ${end.toFixed(1)}s (${(end - start).toFixed(1)}s) | "${hookDescription}"`);
+    console.log(`[Nova] Clip: ${start.toFixed(1)}s → ${end.toFixed(1)}s (${(end - start).toFixed(1)}s)`);
 
     // ── STEP 5: Build Cloudinary transformation URL ─────────────
     // - Horizontal (16:9 landscape): crop to 1:1 square with smart subject detection
@@ -202,8 +202,8 @@ Return ONLY raw JSON (no markdown, no extra text): {"start_offset_seconds": numb
     let transformations = `so_${start.toFixed(2)},eo_${end.toFixed(2)}`;
 
     if (orientation === 'horizontal') {
-      // Crop to 1:1, auto-track subject so the subject stays centered
-      transformations += `,c_fill,ar_1:1,g_auto:subject`;
+      // Crop to 1:1 with auto gravity
+      transformations += `,c_fill,ar_1:1,g_auto`;
     }
     // Vertical/square videos: no crop needed, native format preserved
 

@@ -3,10 +3,10 @@ import { Scissors, Upload, X, CheckCircle2, ChevronRight, Download, Sparkles, Al
 import { motion, AnimatePresence } from 'framer-motion';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
-import './RepurposeLab.css';
+import './ParallaxLab.css';
 
 /**
- * Repurpose Lab — Demo Mode
+ * Parallax Lab — Demo Mode
  * 
  * Shows a "Coming Soon" banner explaining API quota limits.
  * An "Experience Demo" button reveals the demo interface.
@@ -14,7 +14,7 @@ import './RepurposeLab.css';
  * → previewed inline → downloadable as MP4.
  */
 
-export default function RepurposeLab() {
+export default function ParallaxLab() {
 
   // Upload state
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -39,6 +39,7 @@ export default function RepurposeLab() {
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [orientation, setOrientation] = useState<'horizontal' | 'vertical'>('horizontal');
+  const [videoDuration, setVideoDuration] = useState<number | null>(null);
 
   // FFmpeg state
   const [ffmpegLoaded, setFfmpegLoaded] = useState(false);
@@ -69,7 +70,7 @@ export default function RepurposeLab() {
         if (!crossOriginIsolated) {
           throw new Error('CROSS_ORIGIN_ISOLATION_MISSING');
         }
-        const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
+        const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd';
         const ffmpeg = ffmpegRef.current;
 
         ffmpeg.on('log', ({ message }) => {
@@ -175,12 +176,14 @@ export default function RepurposeLab() {
       if (video.duration > 180) {
         setError("Video too long. Maximum duration is 180 seconds.");
         setUploadedFile(null);
+        setVideoDuration(null);
       } else {
         if (previewUrl) URL.revokeObjectURL(previewUrl);
         setUploadedFile(file);
         setPreviewUrl(URL.createObjectURL(file));
         setIsComplete(false);
         setOutputBlobUrl(null);
+        setVideoDuration(video.duration);
       }
       setIsInitializing(false);
     };
@@ -206,6 +209,7 @@ export default function RepurposeLab() {
     setIsProcessing(false);
     setProcessingProgress(0);
     setProcessingStage('');
+    setVideoDuration(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -267,9 +271,24 @@ export default function RepurposeLab() {
       const data = await ffmpeg.readFile(outputName);
       const processedBlob = new Blob([data as any], { type: 'video/mp4' });
 
+      setProcessingStage('Validating compressed output...');
+      setProcessingProgress(55);
+      const maxDurationSeconds = 180;
+      const maxCompressedBytes = 4.5 * 1024 * 1024;
+      if (videoDuration && videoDuration > maxDurationSeconds) {
+        throw new Error(`Video too long. Maximum duration is ${maxDurationSeconds} seconds.`);
+      }
+      if (processedBlob.size > maxCompressedBytes) {
+        throw new Error('Compressed video is too large for the AI pipeline. Please upload a shorter clip.');
+      }
+
       setProcessingStage('Converting for upload...');
       setProcessingProgress(60);
       const base64Video = await blobToBase64(processedBlob);
+      const maxBase64Chars = 5.2 * 1024 * 1024;
+      if (base64Video.length > maxBase64Chars) {
+        throw new Error('Compressed video exceeds the upload limit. Please use a shorter clip.');
+      }
 
       setProcessingStage('Sending to Amazon Nova AI...');
       setProcessingProgress(70);
@@ -360,7 +379,7 @@ export default function RepurposeLab() {
       <div className="lab-sticky-header">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h1 className="lab-title dot-display" style={{ margin: 0 }}>
-            <span className="typography-reveal"><span>Repurpose Lab</span></span>
+            <span className="typography-reveal"><span>Parallax Lab</span></span>
           </h1>
           <motion.span
             initial={{ opacity: 0, scale: 0.8 }}
@@ -428,7 +447,7 @@ export default function RepurposeLab() {
                     {isInitializing ? 'Extracting metadata & orientation...' : error ? error : 'Drag & drop or click to browse'}
                   </p>
                   <p className="body-small text-muted" style={{ marginTop: '4px' }}>
-                    MP4, MOV, WebM • Max 50MB • Max 180s
+                    MP4, MOV, WebM • Max 180s • Auto-compressed to 720p
                   </p>
                 </div>
               </motion.div>
@@ -634,3 +653,4 @@ export default function RepurposeLab() {
     </div>
   );
 }
+

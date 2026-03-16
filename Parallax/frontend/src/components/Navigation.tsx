@@ -36,7 +36,7 @@ export default function Navigation() {
         const attrs = await fetchUserAttributes();
         setUserEmail(attrs.email || '');
         // Try to get name and image from localStorage profile data first
-        const savedProfile = localStorage.getItem('vibe_user_auth');
+        const savedProfile = localStorage.getItem('parallax_user_auth');
         if (savedProfile) {
           const profile = JSON.parse(savedProfile);
           setUserName(profile.name || attrs.email?.split('@')[0] || 'Creator');
@@ -67,7 +67,7 @@ export default function Navigation() {
   const handleLogout = async () => {
     try {
       await signOut();
-      localStorage.removeItem('vibe_user_auth');
+      localStorage.removeItem('parallax_user_auth');
       navigate('/');
     } catch (err) {
       console.error('Logout failed:', err);
@@ -101,7 +101,7 @@ export default function Navigation() {
     if (userEmail && userEmail !== 'Not signed in') {
       return userEmail.slice(0, 2).toUpperCase();
     }
-    return 'VC';
+    return 'PX';
   };
 
   return (
@@ -195,3 +195,4 @@ export default function Navigation() {
     </>
   );
 }
+
