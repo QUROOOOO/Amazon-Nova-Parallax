@@ -238,10 +238,6 @@ export class BackendStack extends cdk.Stack {
       },
     });
 
-    // Explicitly grant public access to the Function URL. 
-    // CDK sometimes skips this if other authorizations are in play.
-    cloudinaryAnalyzeHandler.grantInvokeUrl(new iam.AnyPrincipal());
-
     // Image Upload Presigned URL Generator
     const uploadHandler = new lambda.Function(this, 'UploadHandler', {
       ...lambdaProps,
@@ -352,11 +348,7 @@ export class BackendStack extends cdk.Stack {
       authorizer,
       authorizationType: apigateway.AuthorizationType.COGNITO,
     });
-    const repurposeCloudinaryAnalyze = repurposeResource.addResource('cloudinary-analyze');
-    repurposeCloudinaryAnalyze.addMethod('POST', new apigateway.LambdaIntegration(cloudinaryAnalyzeHandler), {
-      authorizer,
-      authorizationType: apigateway.AuthorizationType.COGNITO,
-    });
+    // cloudinary-analyze uses a direct Lambda Function URL to avoid API Gateway timeouts
 
     // POST/GET /users -> Manage profiles in DynamoDB
     const usersResource = api.root.addResource('users');
