@@ -4,6 +4,8 @@ One video, ten platforms, zero manual editing — AI-first repurposing powered b
 
 Built for the **Amazon Nova AI Hackathon** · Amazon Nova Lite (Bedrock) · AWS Lambda/CDK · React + Vite + TypeScript · Cloudinary · FFmpeg WASM.
 
+Note: This deployed version runs in Demo Mode (processing the first 10s of video) to protect API quotas during the hackathon judging period.
+
 ![Project Demo](docs/demo.gif)
 
 ---

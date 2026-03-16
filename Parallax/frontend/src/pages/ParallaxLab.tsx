@@ -290,7 +290,7 @@ export default function ParallaxLab() {
         throw new Error('Compressed video exceeds the upload limit. Please use a shorter clip.');
       }
 
-      setProcessingStage('Sending to Amazon Nova AI...');
+      setProcessingStage('Sending to Demo Pipeline...');
       setProcessingProgress(70);
       console.log('Targeting AI Function:', functionUrl);
 
@@ -397,6 +397,20 @@ export default function ParallaxLab() {
 
       {/* ═══ WORKSPACE ═══ */}
       <div className="lab-demo-workspace">
+        <div
+          style={{
+            background: 'linear-gradient(90deg, #F59E0B, #F97316)',
+            color: '#1F2937',
+            border: '1px solid rgba(0,0,0,0.15)',
+            borderRadius: '14px',
+            padding: '14px 16px',
+            marginBottom: '18px',
+            fontWeight: 600,
+            boxShadow: '0 6px 20px rgba(249,115,22,0.25)',
+          }}
+        >
+          ⚠️ LIVE DEMO MODE ACTIVE. Due to extreme hackathon API limits, live Amazon Nova processing is temporarily disabled. The system will currently auto-process the first 10 seconds of your video as a demonstration of the rendering pipeline.
+        </div>
         {/* Hidden elements for processing */}
         <video
           ref={sourceVideoRef}

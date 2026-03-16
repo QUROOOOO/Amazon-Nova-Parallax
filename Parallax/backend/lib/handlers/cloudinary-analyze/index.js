@@ -1,11 +1,9 @@
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
-const { BedrockRuntimeClient, ConverseCommand } = require('@aws-sdk/client-bedrock-runtime');
 const cloudinary = require('cloudinary').v2;
 const { Readable } = require('stream');
 
 // ── AWS Clients ──────────────────────────────────────────────
 const s3Client = new S3Client({ region: process.env.REGION || 'us-east-1' });
-const bedrockClient = new BedrockRuntimeClient({ region: 'us-east-1' }); // Nova only available in us-east-1
 
 // ── Cloudinary Config ────────────────────────────────────────
 cloudinary.config({
@@ -100,7 +98,6 @@ exports.handler = async (event) => {
 
     // ── STEP 1: Upload to S3 for Bedrock analysis ─────────────
     const s3Key = `parallax/uploads/${Date.now()}_${filename}`;
-    const s3Uri = `s3://${bucketName}/${s3Key}`;
 
     console.log(`[S3] Uploading to: ${s3Key}`);
     await s3Client.send(new PutObjectCommand({
@@ -118,94 +115,17 @@ exports.handler = async (event) => {
     const videoDuration = cloudinaryResult.duration || 60; // seconds
     console.log(`[Cloudinary] Uploaded: ${publicId} | duration: ${videoDuration}s`);
 
-    // ── STEP 3: Amazon Nova Lite analyzes video via Bedrock ────
-    // Clamp target range: min 8s, max 59s (platform constraint for Shorts/Reels)
-    const MIN_CLIP = 10;
-    const MAX_CLIP = 15;
+    // ── STEP 3: Demo Mode fallback (hardcoded timestamps) ──────
+    const safeDuration = Number.isFinite(videoDuration) ? videoDuration : 10;
+    const start = 0;
+    const end = Math.min(10, Math.max(1, safeDuration));
+    const hookDescription = 'Demo mode (first 10s)';
 
-    const systemPrompt = 'Find the single best 10-15 sec viral hook. Return ONLY raw JSON: {"start_offset_seconds": number, "end_offset_seconds": number}';
+    console.log(`[Demo] Clip: ${start.toFixed(1)}s → ${end.toFixed(1)}s (${(end - start).toFixed(1)}s)`);
 
-    const converseParams = {
-      modelId: 'amazon.nova-lite-v1:0',
-      messages: [
-        {
-          role: 'user',
-          content: [
-            {
-              video: {
-                format: 'mp4',
-                source: {
-                  s3Location: {
-                    uri: s3Uri,
-                    bucketOwner: process.env.ACCOUNT_ID,
-                  },
-                },
-              },
-            },
-            {
-              text: `Analyze the full video. Choose the single most engaging 10-15s moment for YouTube Shorts and Instagram Reels. Video duration: ${videoDuration} seconds. Return timestamps in seconds with 0.1s precision.`,
-            },
-          ],
-        },
-      ],
-      system: [{ text: systemPrompt }],
-      inferenceConfig: {
-        maxTokens: 256,
-        temperature: 0.1, // Low temperature for deterministic JSON output
-      },
-    };
-
-    console.log('[Bedrock] Calling Amazon Nova Lite...');
-    const bedrockResponse = await bedrockClient.send(new ConverseCommand(converseParams));
-    const rawText = bedrockResponse.output?.message?.content?.[0]?.text || '';
-    console.log('[Bedrock] Nova response:', rawText);
-
-    // ── STEP 4: Parse and validate Nova's JSON response ────────
-    let aiResult;
-    try {
-      const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-      aiResult = JSON.parse(jsonMatch ? jsonMatch[0] : rawText.trim());
-    } catch {
-      throw new Error(`Amazon Nova returned unparseable response: ${rawText.slice(0, 200)}`);
-    }
-
-    let start = parseFloat(aiResult.start_offset_seconds);
-    let end = parseFloat(aiResult.end_offset_seconds);
-    const hookDescription = 'Viral hook';
-
-    if (!Number.isFinite(start) || !Number.isFinite(end)) {
-      throw new Error('Amazon Nova returned invalid timestamps.');
-    }
-
-    // Clamp to valid clip range
-    start = Math.max(0, Math.min(start, videoDuration - MIN_CLIP));
-    end = Math.min(end, videoDuration);
-    const clipDuration = end - start;
-
-    // Enforce min/max clip length
-    if (clipDuration < MIN_CLIP) {
-      end = Math.min(start + MIN_CLIP, videoDuration);
-    }
-    if (end - start > MAX_CLIP) {
-      end = Math.min(start + MAX_CLIP, videoDuration);
-    }
-    if (end <= start) {
-      start = Math.max(0, Math.min(start, videoDuration - MIN_CLIP));
-      end = Math.min(start + MIN_CLIP, videoDuration);
-    }
-
-    console.log(`[Nova] Clip: ${start.toFixed(1)}s → ${end.toFixed(1)}s (${(end - start).toFixed(1)}s)`);
-
-    // ── STEP 5: Build Cloudinary transformation URL ─────────────
-    // - Horizontal (16:9 landscape): crop to 1:1 square with smart subject detection
-    // - Vertical/square: trim only, preserve native format
-    let transformations = `so_${start.toFixed(2)},eo_${end.toFixed(2)}`;
-
-    if (orientation === 'horizontal') {
-      // Crop to 1:1 with auto gravity
-      transformations += `,c_fill,ar_1:1,g_auto`;
-    }
-    // Vertical/square videos: no crop needed, native format preserved
+    // ── STEP 4: Build Cloudinary transformation URL ─────────────
+    // Demo mode: always crop to 1:1 with auto subject tracking for first 10 seconds
+    const transformations = `so_${start.toFixed(2)},eo_${end.toFixed(2)},c_fill,ar_1:1,g_auto`;
 
     const finalUrl = cloudinary.url(publicId, {
       resource_type: 'video',
@@ -223,7 +143,7 @@ exports.handler = async (event) => {
         durationSeconds: parseFloat((end - start).toFixed(2)),
         hookDescription,
         orientation,
-        croppedToSquare: orientation === 'horizontal',
+        croppedToSquare: true,
       },
     }, origin);
 
